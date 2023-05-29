@@ -1,0 +1,1 @@
+In this project, we combine reanalysis temperature data from ECWMF-ERA5 with population data from different years in China to study inequality in temperature exposure across population groups.

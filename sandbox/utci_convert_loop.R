@@ -108,7 +108,8 @@ utci_obs_ave <- utci_obs %>%
   #                                       utci_ave >= 0  ~ 0),
          year = "2010",
          month = t,
-         date = i
+         day = i,
+         date = as.Date(with(.,paste(year,month,day,sep="-")),"%Y-%m-%d")
          )
 
 utci_ave_2010[[t]][[i]] <- utci_obs_ave
@@ -177,11 +178,45 @@ for (t in 1:12) {
         #                                       utci_ave >= 0  ~ 0),
         year = "2020",
         month = t,
-        date = i
+        day = i,
+        date = as.Date(with(.,paste(year,month,day,sep="-")),"%Y-%m-%d")
       )
     
     utci_ave_2020[[t]][[i]] <- utci_obs_ave
   }
 }
 
+
+
 ################################################################################
+
+library(data.table)
+
+utci_ave_2010_wide <- lapply(utci_ave_2010, rbindlist)
+utci_ave_2010_wide <- do.call(rbind, utci_ave_2010_wide)
+utci_ave_2020_wide <- lapply(utci_ave_2020, rbindlist)
+utci_ave_2020_wide <- do.call(rbind, utci_ave_2020_wide)
+
+utci_ave_2010_wide <- 
+  utci_ave_2010_wide %>% 
+  select(-year,-month,-day) %>%
+  pivot_wider(names_from = "date",values_from = "utci_ave")
+  
+utci_ave_2020_wide <- 
+  utci_ave_2020_wide %>% 
+  select(-year,-month,-day) %>%
+  pivot_wider(names_from = "date",values_from = "utci_ave")
+
+
+write.csv(utci_ave_2010_wide,"utci_ave_2010.csv")
+write.csv(utci_ave_2020_wide,"utci_ave_2020.csv")
+
+
+
+
+
+
+
+
+
+

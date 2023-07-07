@@ -1,0 +1,260 @@
+---
+title: "Untitled"
+output: html_document
+date: '2023-07-07'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(sf)
+library(sp)
+library(tidyverse)
+library(dplyr)
+library(readxl)
+
+```
+
+
+
+```{r demographic input}
+df_china_census_county_2010 <- st_read("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/census_county_data/2010 Census Data and GIS/Data/2010CountyCensusA_Extension.shp")[,c(1,61:98)]
+
+#calculate total pop
+total_pop_2010 <- sum(as.numeric(unlist(df_china_census_county_2010[,-1]), na.rm = TRUE))
+
+
+#divide total pop
+df_china_census_county_2010 <- df_china_census_county_2010 %>%
+  mutate_at(vars(-1), ~ . / total_pop_2010)
+
+check_sum <- sum(as.numeric(unlist(df_china_census_county_2010[,-1]), na.rm = TRUE))
+#should be 1
+
+
+colnames(df_china_census_county_2010)[2:39] <-c(
+"popgrp1",
+"popgrp2",
+"popgrp3",
+"popgrp4",
+"popgrp5",
+"popgrp6",
+"popgrp7",
+"popgrp8",
+"popgrp9",
+"popgrp10",
+"popgrp11",
+"popgrp12",
+"popgrp13",
+"popgrp14",
+"popgrp15",
+"popgrp16",
+"popgrp17",
+"popgrp18",
+"popgrp19",
+"popgrp20",
+"popgrp21",
+"popgrp22",
+"popgrp23",
+"popgrp24",
+"popgrp25",
+"popgrp26",
+"popgrp27",
+"popgrp28",
+"popgrp29",
+"popgrp30",
+"popgrp31",
+"popgrp32",
+"popgrp33",
+"popgrp34",
+"popgrp35",
+"popgrp36",
+"popgrp37",
+"popgrp38") 
+
+
+df_china_census_county_2010<-st_drop_geometry(df_china_census_county_2010)
+write_xlsx(df_china_census_county_2010,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_china_census_county_2010.xlsx")
+
+
+```
+
+
+```{r variable name key}
+variable_key_file <- read_xlsx("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/census_county_data/2010 Census Data and GIS/Data/EXCEL/Variable_Lists_Table_A_and_L.xlsx")[67:104,c(2,4,6,7)]
+
+
+
+variable_key_file$key <-c(
+"popgrp1",
+"popgrp2",
+"popgrp3",
+"popgrp4",
+"popgrp5",
+"popgrp6",
+"popgrp7",
+"popgrp8",
+"popgrp9",
+"popgrp10",
+"popgrp11",
+"popgrp12",
+"popgrp13",
+"popgrp14",
+"popgrp15",
+"popgrp16",
+"popgrp17",
+"popgrp18",
+"popgrp19",
+"popgrp20",
+"popgrp21",
+"popgrp22",
+"popgrp23",
+"popgrp24",
+"popgrp25",
+"popgrp26",
+"popgrp27",
+"popgrp28",
+"popgrp29",
+"popgrp30",
+"popgrp31",
+"popgrp32",
+"popgrp33",
+"popgrp34",
+"popgrp35",
+"popgrp36",
+"popgrp37",
+"popgrp38") 
+
+
+df_key_loc_china_county2province <- st_read("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/census_county_data/2010 Census Data and GIS/Data/2010CountyCensusA_Extension.shp")[,c(1:3,521:527)]
+
+write_xlsx(df_key_loc_china_county2province,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_county2province_2010.xlsx")
+
+```
+
+```{r UTCI data}
+utci_ave_2010 <- read_csv("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/utci_ecmwf_raw_data/utci_ave_2010.csv")
+
+utci_ave_2020 <- read_csv("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/utci_ecmwf_raw_data/utci_ave_2020.csv")
+
+county_geo_2010 <- st_read("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/census_county_data/2010 Census Data and GIS/Data/2010CountyCensusA_Extension.shp")[,c(1)]
+
+class(county_geo_2010) 
+
+#transform to spatial data
+utci_point_2010 <- st_as_sf(utci_ave_2010,coords=c("Long","Lat"),crs=4326)
+utci_point_2020 <- st_as_sf(utci_ave_2020,coords=c("Long","Lat"),crs=4326)
+class(utci_point_2010) 
+class(utci_point_2020) 
+
+
+
+
+
+
+```
+
+
+
+```{r spatial join, echo=FALSE}
+#spatial join, keeping the county name
+st_crs(utci_point_2010) <- st_crs(county_geo_2010)
+st_crs(utci_point_2020) <- st_crs(county_geo_2010)
+county_join_2010<-st_join(utci_point_2010, left = TRUE, st_make_valid(county_geo_2010)[c("GBCounty")]) # join points
+#county_join_2020<-st_join(utci_point_2020, left = TRUE, st_make_valid(county_geo_2020)[c("GBCounty")]) # join points
+# two county is no valid for join for unknown reason, force to be valid using st_make_valid
+
+
+# county_join_year, find point within county and assign county name(id) to point data
+length(unique(county_join_2010$GBCounty)) # some counties are too small to capture any points
+```
+
+
+```{r find missing county}
+  
+dt_mark <-as.data.frame(unique(county_join_2010$GBCounty)[-1])
+colnames(dt_mark)<-"GBCounty"
+dt_mark$mark<-0
+dt_mark<-left_join(county_geo_2010,dt_mark)
+dt_mark<-dt_mark %>% 
+  select(GBCounty,mark)
+
+dt_mark <- replace(dt_mark, is.na(dt_mark), 1)
+
+# row with 1 in mark indicates counties that are too small/skewed to capture points 
+```
+
+
+```{r find nearest point for small county}
+#get coordinate from point
+point<-utci_point_2010[,367]
+
+# calc centroids
+regions_centr <- st_centroid(st_make_valid(county_geo_2010))
+# find the nearest neighbour to the centroid of the each polygon
+# create a new column with newest point
+regions_centr <- as.data.frame(c(regions_centr,point[st_nearest_feature(regions_centr, point),]))
+
+regions_centr <- left_join(regions_centr,dt_mark,by="GBCounty")
+
+```
+
+
+```{r}
+
+small_county_2010 <-regions_centr %>%
+  filter(mark == 1)%>%
+  mutate(geometry=geometry.1)%>%
+  left_join(utci_point_2010)
+
+#small_county_2020 <-regions_centr %>%
+#  filter(mark == 1)%>%
+#  mutate(geometry=geometry.1)%>%
+#  left_join(utci_point_2020)
+
+
+# prepare same column names as for "county_join_2010" to join
+small_county_2010 <-small_county_2010[, c(7:372,6,1)]
+#small_county_2010 <-small_county_2010[, c()]
+
+
+#county_join_2010[,c(1,368,369,2:367)]
+#county_join_2020[,c(1,368,369,2:367)]
+
+small_county_2010<-st_as_sf(small_county_2010)
+#small_county_2020<-st_as_sf(small_county_2020)
+st_crs(county_join_2010) <- st_crs(small_county_2010)
+#st_crs(county_join_2020) <- st_crs(small_county_2020)
+
+
+###
+utci_county_2010_final <- rbind(county_join_2010,small_county_2010) 
+#utci_county_2020 <- rbind(county_join_2020,small_county_2020)
+###
+
+
+df_key_loc_china_coord2county_2010 <- utci_county_2010_final %>%
+    mutate(Long = unlist(map(utci_county_2010_final$geometry,1)),
+           Lat = unlist(map(utci_county_2010_final$geometry,2))) %>%
+  select(Long,Lat,GBCounty) %>%
+  na.omit()
+
+#df_key_loc_china_coord2county_2020 <- utci_county_2020 %>%
+#    mutate(Long = unlist(map(utci_county_2020$geometry,1)),
+#           Lat = unlist(map(utci_county_2020$geometry,2))) %>%
+#  select(...1,Long,Lat,county,county_code) %>%
+#  na.omit()
+
+
+length(unique(df_key_loc_china_coord2county_2010$GBCounty))
+length(unique(county_geo_2010$GBCounty))
+#check same length of unique county
+
+#note that point id ...1 is not unique because of usage of nearest point
+
+#setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data")
+
+write_xlsx(df_key_loc_china_coord2county_2010,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_2010.xlsx")
+
+```
+
+

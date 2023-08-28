@@ -31,16 +31,16 @@
 #' Population group for aggregation name in population key file
 #' @param arv_label_demo variable names (C4) for population groups,
 #' group attributes to consider include in output file.
-#' @param str_prefix_loc variable names for (D1) location names, 
+#' @param str_prefix_loc variable names for (D1) location names,
 #' column prefix for loc
-#' @param stv_key_loc variable names for (D2) location names, 
+#' @param stv_key_loc variable names for (D2) location names,
 #' col1 name in location ke file with same value as loc rows
-#' @param stv_key_loc_agg variable names for (D3) location names, 
+#' @param stv_key_loc_agg variable names for (D3) location names,
 #' col2 name for higher level location key
-#' @param stv_grp_loc variable names for (D4) location names, 
+#' @param stv_grp_loc variable names for (D4) location names,
 #' Regional group for aggregation, jointly with population group,
 #' average exposure shown at STV_GRP_LOC X STV_GRP_DEMO level
-#' @param arv_label_loc variable names for (D5) location names, 
+#' @param arv_label_loc variable names for (D5) location names,
 #' group attributes labels to consider to include, can be empty
 #' @param bl_save_img boolean store image
 #' @param bl_save_csv boolean store data
@@ -72,7 +72,7 @@ ffp_demo_loc_env_inequality <- function(
     str_prefix_loc = "",
     stv_key_loc = "location_key", stv_key_loc_agg = "ISOCODE",
     stv_grp_loc = "region_name", arv_label_loc = c("region_name"),
-    str_prefix_time = "day",    
+    str_prefix_time = "day",
     snm_new_file_name_prefix = "ineq",
     st_time_stats = "share", fl_temp_bound = 35, bl_greater = TRUE,
     bl_save_img = TRUE, bl_save_csv = TRUE,
@@ -93,7 +93,7 @@ ffp_demo_loc_env_inequality <- function(
   bl_simu_data <- FALSE
 
   # E. Time variables
-  str_prefix_time <- "day"
+  # str_prefix_time <- "day"
 
   # new file new for saving
   snm_new_file_name <- paste(
@@ -115,31 +115,31 @@ ffp_demo_loc_env_inequality <- function(
   # df_key_loc_country <- readr::read_csv(st_file_key_loc)
   # tb_loc_pollution_aod_load <- readr::read_csv(st_file_envir)
 
-  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
+  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
   #   left_join(
-  #     df_key_loc_country %>% select(GBCounty, location_id), 
-  #     by="location_id") %>% 
+  #     df_key_loc_country %>% select(GBCounty, location_id),
+  #     by="location_id") %>%
   #   select(location_id, GBCounty, everything())
   # # Average over higher location level by days
-  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
-  #   group_by(GBCounty) %>% 
+  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
+  #   group_by(GBCounty) %>%
   #   summarise(across(everything(), mean))
   # # Select columns
-  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
-  #   select(-location_id) %>% 
+  # tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
+  #   select(-location_id) %>%
   #   rename(location_id = GBCounty)
 
   # # Change the ID column in key file
-  # df_key_loc_country_alt <- tb_loc_pollution_aod_load %>% 
+  # df_key_loc_country_alt <- tb_loc_pollution_aod_load %>%
   #   select(location_id)
-  # df_key_loc_country_alt <- df_key_loc_country_alt %>% 
+  # df_key_loc_country_alt <- df_key_loc_country_alt %>%
   #   mutate(GBCounty = location_id)
   # df_key_loc_country <- df_key_loc_country_alt
-  # # df_key_loc_country %>% 
-  # #   group_by(GBCounty) 
+  # # df_key_loc_country %>%
+  # #   group_by(GBCounty)
 
   # # Rename column ID in population file as well
-  # mt_pop_data_frac_sedac_load <- mt_pop_data_frac_sedac_load %>% 
+  # mt_pop_data_frac_sedac_load <- mt_pop_data_frac_sedac_load %>%
   #   rename(location_id = GBCounty)
 
   setwd(spt_path_data)
@@ -148,29 +148,29 @@ ffp_demo_loc_env_inequality <- function(
   df_key_loc_country <- readr::read_csv(st_file_key_loc)
   tb_loc_pollution_aod_load <- readr::read_csv(st_file_envir)
 
-  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
+  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
     left_join(
-      df_key_loc_country %>% select(!!sym(stv_key_loc_agg), !!sym(stv_key_loc)), 
-      by=stv_key_loc) %>% 
+      df_key_loc_country %>% select(!!sym(stv_key_loc_agg), !!sym(stv_key_loc)),
+      by=stv_key_loc) %>%
     select(!!sym(stv_key_loc), !!sym(stv_key_loc_agg), everything())
   # Average over higher location level by days
-  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
-    group_by(!!sym(stv_key_loc_agg)) %>% 
+  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
+    group_by(!!sym(stv_key_loc_agg)) %>%
     summarise(across(everything(), mean))
   # Select columns
-  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>% 
-    select(-!!sym(stv_key_loc)) %>% 
+  tb_loc_pollution_aod_load <- tb_loc_pollution_aod_load %>%
+    select(-!!sym(stv_key_loc)) %>%
     rename(!!sym(stv_key_loc) := !!sym(stv_key_loc_agg))
 
   # Change the ID column in key file
-  df_key_loc_country_alt <- tb_loc_pollution_aod_load %>% 
+  df_key_loc_country_alt <- tb_loc_pollution_aod_load %>%
     select(!!sym(stv_key_loc))
-  df_key_loc_country_alt <- df_key_loc_country_alt %>% 
+  df_key_loc_country_alt <- df_key_loc_country_alt %>%
     mutate(!!sym(stv_key_loc_agg) := !!sym(stv_key_loc))
   df_key_loc_country <- df_key_loc_country_alt
 
   # Rename column ID in population file as well
-  mt_pop_data_frac_sedac_load <- mt_pop_data_frac_sedac_load %>% 
+  mt_pop_data_frac_sedac_load <- mt_pop_data_frac_sedac_load %>%
     rename(!!sym(stv_key_loc) := !!sym(stv_key_loc_agg))
 
 
@@ -279,8 +279,8 @@ ffp_demo_loc_env_inequality <- function(
     # but not all population found a country code match
     df_pop_data_frac_long <- mt_pop_sedac_long_agg %>%
       left_join(df_key_loc %>%
-                  select(!!sym(stv_key_loc), popgrp_region), 
-                  by = stv_key_loc) %>%
+                  select(!!sym(stv_key_loc), popgrp_region),
+                by = stv_key_loc) %>%
       select(!!sym(stv_key_loc), popgrp_region, popgrp_age, pop) %>%
       drop_na(popgrp_region)
     # total mass sums to 94.8 percent, sum(df_pop_data_frac$pop)
@@ -331,14 +331,12 @@ ffp_demo_loc_env_inequality <- function(
     # tb_loc_pollution_aod_load <- readr::read_csv(st_file_envir)
 
     # Aggregate simple mean
-#' @param fl_temp_bound float for temperature bound if `st_time_stats` is share of days
-#' @param bl_greater boolean if to compute larger or smaller than `fl_temp_bound`
 
     if (tolower(st_time_stats) == tolower("mean")) {
       tb_loc_pollution_all <- tb_loc_pollution_aod_load %>%
         mutate(
           avgdailypm10 = base::rowMeans(
-            dplyr::pick(contains("day")),
+            dplyr::pick(contains(str_prefix_time)),
             na.rm = TRUE
           )
         ) %>% select(!!sym(stv_key_loc), avgdailypm10) %>%
@@ -348,29 +346,29 @@ ffp_demo_loc_env_inequality <- function(
       if (bl_greater) {
         it_col_count <- dim(tb_loc_pollution_aod_load)[2]
         tb_loc_pollution_all <- tb_loc_pollution_aod_load %>%
-          mutate(across(contains("day"), function(x) ifelse(x < fl_temp_bound, 0, 1))) %>%
+          mutate(across(contains(str_prefix_time), function(x) ifelse(x < fl_temp_bound, 0, 1))) %>%
           mutate(
             avgdailypm10 = base::rowMeans(
-              dplyr::pick(contains("day")),
+              dplyr::pick(contains(str_prefix_time)),
               na.rm = TRUE
             )
-          ) %>%          
+          ) %>%
           select(!!sym(stv_key_loc), avgdailypm10) %>%
           rename(location_id = !!sym(stv_key_loc))
 
       } else {
         it_col_count <- dim(tb_loc_pollution_aod_load)[2]
         tb_loc_pollution_all <- tb_loc_pollution_aod_load %>%
-          mutate(across(contains("day"), function(x) ifelse(x >= fl_temp_bound, 0, 1))) %>%
+          mutate(across(contains(str_prefix_time), function(x) ifelse(x >= fl_temp_bound, 0, 1))) %>%
           mutate(
             avgdailypm10 = base::rowMeans(
-              dplyr::pick(contains("day")),
+              dplyr::pick(contains(str_prefix_time)),
               na.rm = TRUE
             )
-          ) %>%          
+          ) %>%
           select(!!sym(stv_key_loc), avgdailypm10) %>%
           rename(location_id = !!sym(stv_key_loc))
-        
+
       }
     }
 

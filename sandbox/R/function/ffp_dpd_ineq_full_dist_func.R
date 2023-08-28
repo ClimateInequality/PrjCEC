@@ -3,10 +3,16 @@
 #' @description In each location, compute location-specific statistics along
 #' increments of thresholds, including share of days/hours experiencing more
 #' or less than some threshold of temperature or pollution. For each statistics
-#' compute CDF across locations. Then Create dataframe where rows are share of
+#' compute PMF and CDF across locations. Then Create dataframe where rows are share of
 #' days for example exposed to some threshold of temperature or pollution, and
 #' columns keep track of different threholds specified.
 #' This runs after \input{ffp_demo_loc_env_inequality} has ran.
+#'
+#' The input data might be for share of days above some threshold. This function
+#' will also compute the 3D (threshold=x, share-of-days=y, share-of-pop=z) stats
+#' based on share of days below each temperature threshold. This is under the assumption
+#' that the input \input{st_time_stats} is equal to share
+#' 
 #'
 #' @param spt_path_out string path where data and image output files are stored
 #' @param str_prefix_demo variable names (C1) for population groups,
@@ -30,8 +36,15 @@
 #' @param verbose_debug boolean print detailed progress and detailed results
 #' @author fan wang, \url{http://fanwangecon.github.io}
 #'
-#' @return an array of tax-liabilities for particular kids count and martial
-#'   status along an array of income levels
+#' @return four csv files for \input{st_time_stats} equal to share, 3D output CSV files where
+#' columns are value (e.g. temperature) thresholds, rows are share of days, and cells are share
+#' of population for PMF (probability mass function), and share of population up to row for CDF
+#' \itemize{
+#'   \item le_pmf below value (e.g., temp) threshold 3D
+#'   \item ge_pmf above value (e.g., temp) threshold 3D
+#'   \item le_cdf below value (e.g., temp) threshold 3D
+#'   \item ge_cdf above value (e.g., temp) threshold 3D
+#' }
 #' @references
 #' \url{https://fanwangecon.github.io/prjenvdemo/articles/fv_rda_simu_loc_demo.html}
 #' @export
@@ -71,7 +84,7 @@ ffp_demo_loc_thres_dist <- function(
         st_time_stats = st_time_stats, 
         fl_temp_bound = fl_temp_bound, 
         bl_greater = bl_greater,
-        verbose = FALSE)
+        verbose = FALSE)$snm_new_file_name_prefix
 
     # if (tolower(st_time_stats) == tolower("mean")) {
     #   snm_new_file_name_prefix <- paste0("ineq_", st_time_stats)
@@ -108,6 +121,19 @@ ffp_demo_loc_thres_dist <- function(
         fl_temp_bound = fl_temp_bound,
         bl_greater = bl_greater,
         compute_id = it_file_ctr)
+    
+    # Generate file of opposite direction, if original is above, this is below, vice versa
+    if (st_time_stats == "share") {
+      df_excburden_percentiles_keys_bl_oppo <- df_excburden_percentiles_keys %>%
+        mutate(
+          st_time_stats = st_time_stats,
+          fl_temp_bound = fl_temp_bound,
+          bl_greater = !bl_greater,
+          compute_id = it_file_ctr) %>% 
+        mutate(
+          pm10_grp_mean = 1 - pm10_grp_mean, 
+          pm10_overall_mean = 1 - pm10_overall_mean)
+    }
 
     # Drop irrelevant aggregate rows and select relevant information
     df_excburden_percentiles_keys <- df_excburden_percentiles_keys %>%
@@ -119,129 +145,197 @@ ffp_demo_loc_thres_dist <- function(
         pm10_overall_mean,
         fl_temp_bound
       )
+    df_excburden_percentiles_keys_bl_oppo <- df_excburden_percentiles_keys_bl_oppo %>%
+      drop_na(popgrp) %>%
+      select(
+        !!sym(str_prefix_demo), !!sym(stv_grp_demo), !!sym(stv_grp_loc),
+        popgrp_mass,
+        pm10_grp_mean,
+        pm10_overall_mean,
+        fl_temp_bound
+      )      
 
     if (it_file_ctr == 1) {
-      df_temp_cdf_full_jnt <- df_excburden_percentiles_keys
+      df_temp_cdf_full_jnt_main <- df_excburden_percentiles_keys
     } else {
-      df_temp_cdf_full_jnt <- bind_rows(
-        df_temp_cdf_full_jnt, df_excburden_percentiles_keys)
+      df_temp_cdf_full_jnt_main <- bind_rows(
+        df_temp_cdf_full_jnt_main, df_excburden_percentiles_keys)
+    }
+    if (st_time_stats == "share") {    
+      if (it_file_ctr == 1) {
+        df_temp_cdf_full_jnt_oppo <- df_excburden_percentiles_keys_bl_oppo
+      } else {
+        df_temp_cdf_full_jnt_oppo <- bind_rows(
+          df_temp_cdf_full_jnt_oppo, df_excburden_percentiles_keys_bl_oppo)
+      }
     }
 
   }
-  if (verbose) {
-    st_caption = paste('df_temp_cdf_full_jnt')
-    df_temp_cdf_full_jnt %>%
-      kable(caption = st_caption)
+
+  if (st_time_stats == "share") {
+    ar_bl_main_and_oppo <- c(TRUE, FALSE)
+  } else {
+    ar_bl_main_and_oppo <- c(TRUE)
   }
 
-  # 11. Reshape from long to wide ----
-  # Each row is a different location
-  # Each column is a different threshold level
-  # Each cell contains share in this location for this threshold with above x temp
+  for (bl_main_and_oppo in ar_bl_main_and_oppo) {
 
-  # keep only child in youngest age group
-  df_temp_cdf_full_jnt <- df_temp_cdf_full_jnt %>%
-    filter(!!sym(stv_grp_demo) == st_demo_subgroup) %>%
-    select(-popgrp, -pm10_overall_mean, -!!sym(stv_grp_demo)) %>%
-    rename(sharedays_above_temp = pm10_grp_mean)
-
-  # Long to wide
-  df_temp_cdf_full_jnt_wide <- df_temp_cdf_full_jnt %>%
-    arrange(!!sym(stv_grp_loc)) %>%
-    pivot_wider(id_cols = c("popgrp_mass", !!sym(stv_grp_loc)),
-                names_from = fl_temp_bound,
-                names_prefix = "temp_ge_",
-                values_from = sharedays_above_temp) %>%
-    ungroup() %>%
-    mutate(popgrp_mass = popgrp_mass/sum(popgrp_mass)) %>%
-    arrange(!!sym(stv_grp_loc))
-  if (verbose) {
-    st_caption = paste('df_temp_cdf_full_jnt_wide')
-    df_temp_cdf_full_jnt_wide %>%
-      kable(caption = st_caption)
-  }
-
-  # 12. Generate greater than threshold-specific CDFs ----
-  it_file2_ctr <- 0
-  for (fl_temp_bound in ar_temp_bound) {
-    it_file2_ctr <- it_file2_ctr + 1
-
-    # Threshold variable
-    st_col_share <- paste0("temp_ge_", fl_temp_bound)
-
-    # Select one threshold
-    df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide %>%
-      select(popgrp_mass, st_col_share)
-
-    # Sort and generate CDF
-    fl_round_multiple <- 100/fl_round_gap_percent
-    df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide_sel %>%
-      mutate(
-        !!sym(st_col_share) :=
-          round(!!sym(st_col_share)*fl_round_multiple, 0)/fl_round_multiple) %>%
-      arrange(!!sym(st_col_share)) %>%
-      group_by(!!sym(st_col_share)) %>%
-      summarize(popgrp_mass_sum = sum(popgrp_mass))
-
-    # Add temp bound as variable
-    df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide_sel %>%
-      rename(
-        share_days =!!sym(st_col_share),
-        pop_cdf = popgrp_mass_sum
-      ) %>%
-      mutate(fl_temp_bound = fl_temp_bound)
-
-    # File counting again
-    if (it_file2_ctr == 1) {
-      df_temp_cdf_full_long <- df_temp_cdf_full_jnt_wide_sel
+    if (bl_main_and_oppo) {
+      df_temp_cdf_full_jnt <- df_temp_cdf_full_jnt_main
     } else {
-      df_temp_cdf_full_long <- bind_rows(
-        df_temp_cdf_full_long, df_temp_cdf_full_jnt_wide_sel)
+      df_temp_cdf_full_jnt <- df_temp_cdf_full_jnt_oppo
     }
-    # sum(df_temp_cdf_full_jnt_wide_sel %>% pull(popgrp_mass_sum))
-  }
-  if (verbose) {
-    st_caption = paste('df_temp_cdf_full_long')
-    df_temp_cdf_full_long %>%
-      kable(caption = st_caption)
-  }
-
-  # 13. Final long to wide conversion, rows are share days, columns are fl_temp_bounds ----
-  # Long to wide
-  df_temp_cdf_full_wide <- df_temp_cdf_full_long %>%
-    arrange(fl_temp_bound, share_days) %>%
-    pivot_wider(id_cols = c("share_days"),
-                names_from = fl_temp_bound,
-                names_prefix = "temp_ge_",
-                values_from = pop_cdf) %>%
-    arrange(share_days)
-  if (verbose) {
-    st_caption = paste('df_temp_cdf_full_wide')
-    df_temp_cdf_full_wide %>%
-      kable(caption = st_caption) 
-  }
-
-
-  # File out
-  if (bl_save_csv) {
-
-    snm_new_file_name <- paste(
-      paste0("ineq_", st_time_stats),
-      stv_grp_demo,
-      st_demo_subgroup,
-      "full_pmf",
-      sep = "_")
-
-    spn_output_file <- file.path(
-      spt_path_out,
-      paste0(snm_new_file_name, '.csv'),
-      fsep = .Platform$file.sep)
-
-    readr::write_csv(df_temp_cdf_full_wide, spn_output_file, na="0")
-    if (verbose_debug) {
-      print(glue::glue(
-        "File saved successfully: ", spn_output_file))
+    if (verbose) {
+      st_caption = paste('df_temp_cdf_full_jnt')
+      df_temp_cdf_full_jnt %>% 
+        kable(caption = st_caption)
     }
+
+    # 11. Reshape from long to wide ----
+    # Each row is a different location
+    # Each column is a different threshold level
+    # Each cell contains share in this location for this threshold with above x temp
+    # keep only child in youngest age group
+    df_temp_cdf_full_jnt <- df_temp_cdf_full_jnt %>%
+      filter(!!sym(stv_grp_demo) == st_demo_subgroup) %>%
+      select(-popgrp, -pm10_overall_mean, -!!sym(stv_grp_demo)) %>%
+      rename(sharedays_above_temp = pm10_grp_mean)
+
+    # Long to wide
+    df_temp_cdf_full_jnt_wide <- df_temp_cdf_full_jnt %>%
+      arrange(!!sym(stv_grp_loc)) %>%
+      pivot_wider(id_cols = c("popgrp_mass", !!sym(stv_grp_loc)),
+                  names_from = fl_temp_bound,
+                  names_prefix = "temp_ge_",
+                  values_from = sharedays_above_temp) %>%
+      ungroup() %>%
+      mutate(popgrp_mass = popgrp_mass/sum(popgrp_mass)) %>%
+      arrange(!!sym(stv_grp_loc))
+    if (verbose) {
+      st_caption = paste('df_temp_cdf_full_jnt_wide')
+      df_temp_cdf_full_jnt_wide %>%
+        kable(caption = st_caption)
+    }
+
+    # 12. Generate greater than threshold-specific CDFs ----
+    it_file2_ctr <- 0
+    for (fl_temp_bound in ar_temp_bound) {
+      it_file2_ctr <- it_file2_ctr + 1
+
+      # Threshold variable
+      st_col_share <- paste0("temp_ge_", fl_temp_bound)
+
+      # Select one threshold
+      df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide %>%
+        select(popgrp_mass, st_col_share)
+
+      # Sort and generate CDF
+      fl_round_multiple <- 100/fl_round_gap_percent
+      df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide_sel %>%
+        mutate(
+          !!sym(st_col_share) :=
+            round(!!sym(st_col_share)*fl_round_multiple, 0)/fl_round_multiple) %>%
+        arrange(!!sym(st_col_share)) %>%
+        group_by(!!sym(st_col_share)) %>%
+        summarize(popgrp_mass_sum = sum(popgrp_mass))
+
+      # Add temp bound as variable, define PMF and CDF
+      # PMF = probability mass function
+      # iCDF = 1 - CDF
+      df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide_sel %>%
+        ungroup() %>%
+        rename(
+          share_days =!!sym(st_col_share),
+          pop_pmf = popgrp_mass_sum
+        ) %>%
+        mutate(
+          fl_temp_bound = fl_temp_bound
+          )
+
+      # File counting again
+      if (it_file2_ctr == 1) {
+        df_temp_cdf_full_long <- df_temp_cdf_full_jnt_wide_sel
+      } else {
+        df_temp_cdf_full_long <- bind_rows(
+          df_temp_cdf_full_long, df_temp_cdf_full_jnt_wide_sel)
+      }
+      # sum(df_temp_cdf_full_jnt_wide_sel %>% pull(popgrp_mass_sum))
+    }
+
+    for (bl_pmf_or_icdf in c(1,2)) {
+
+        if (verbose) {
+          st_caption = paste('df_temp_cdf_full_long')
+          df_temp_cdf_full_long %>%
+            kable(caption = st_caption)
+        }
+        
+        st_suffix_pmf_or_icdf <- "pmf"
+        if (bl_pmf_or_icdf == 2) {
+          st_suffix_pmf_or_icdf <- "cdf"
+        }
+        bl_greater_use <- bl_greater
+        if (!bl_main_and_oppo) {
+          # If not main, use the opposite of bl_greater
+          bl_greater_use <- !bl_greater
+        }
+
+        # Variable names, greater or less then 
+        st_rela <- ffp_demo_file_prefix(
+            snm_new_file_name_prefix = snm_new_file_name_prefix,
+            st_time_stats = st_time_stats, 
+            fl_temp_bound = fl_temp_bound, 
+            bl_greater = bl_greater_use,
+            verbose = FALSE)$st_rela
+        st_names_prefix <- st_rela
+
+        # 13. Final long to wide conversion, rows are share days, columns are fl_temp_bounds ----
+        # Long to wide
+        df_temp_cdf_full_wide <- df_temp_cdf_full_long %>%
+          arrange(fl_temp_bound, share_days) %>%
+          pivot_wider(id_cols = c("share_days"),
+                      names_from = fl_temp_bound,
+                      names_prefix = st_names_prefix,
+                      values_from = pop_pmf) %>%
+          arrange(share_days) 
+        if (verbose) {
+          st_caption = paste('df_temp_cdf_full_wide')
+          df_temp_cdf_full_wide %>%
+            kable(caption = st_caption) 
+        }
+
+        # Replace NA with 0, otherwise CDF does not compute
+        df_temp_cdf_full_wide <- df_temp_cdf_full_wide %>% 
+          mutate(across(contains(st_names_prefix), function(x) replace_na(x, 0)))
+
+        if (bl_pmf_or_icdf == 2) {
+          df_temp_cdf_full_wide <- df_temp_cdf_full_wide %>% 
+            mutate(across(contains(st_names_prefix), function(x) (cumsum(x))))
+        }
+
+        # File out
+        if (bl_save_csv) {
+
+          snm_new_file_name <- paste(
+            paste0("ineq_", st_rela),
+            stv_grp_demo,
+            st_demo_subgroup,          
+            st_suffix_pmf_or_icdf,
+            sep = "_")
+
+          spn_output_file <- file.path(
+            spt_path_out,
+            paste0(snm_new_file_name, '.csv'),
+            fsep = .Platform$file.sep)
+
+          readr::write_csv(df_temp_cdf_full_wide, spn_output_file, na="0")
+          if (verbose_debug) {
+            print(glue::glue(
+              "File saved successfully: ", spn_output_file))
+          }
+      }
+    }
+
   }
 
   return(df_temp_cdf_full_wide)

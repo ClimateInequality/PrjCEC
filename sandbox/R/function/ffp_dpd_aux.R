@@ -23,13 +23,21 @@ ffp_demo_file_prefix <- function(
 
     if (tolower(st_time_stats) == tolower("mean")) {
         snm_new_file_name_prefix <- paste0("ineq_", st_time_stats)
+        st_rela <- ""
     } else if (tolower(st_time_stats) == tolower("share")) {
         if (bl_greater) {
-        snm_new_file_name_prefix <- paste0("ineq_", st_time_stats, "_gr", fl_temp_bound)
+            st_rela <- paste0(st_time_stats, "_gr")
+            snm_new_file_name_prefix <- paste0("ineq_", st_rela, fl_temp_bound)
         } else {
-        snm_new_file_name_prefix <- paste0("ineq_", st_time_stats, "_ls", fl_temp_bound)
+            st_rela <- paste0(st_time_stats, "_ls")
+            snm_new_file_name_prefix <- paste0("ineq_",  st_rela, fl_temp_bound)
         }
     }
 
-    return(snm_new_file_name_prefix) 
-}    
+    ls_snm_new_file_name_prefix <- list(
+        snm_new_file_name_prefix = snm_new_file_name_prefix,
+        st_rela = st_rela
+    )
+
+    return(ls_snm_new_file_name_prefix) 
+}

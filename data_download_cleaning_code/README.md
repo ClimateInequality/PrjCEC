@@ -13,3 +13,4 @@ aims:    to convert datafile downloaded from ERA5 to csv file;
 
 outputs: a spreadsheet contains utci values by coordinates, defined as Long and Lat;
          the columns are in date-hour format, e.g. 01-01-00:00, 01-01-01：00...12-31-23:00;
+         also include codes that produce daily average based on hourly data, these codes are inactive in the current files, e.g. 01-01, 01-02,...,12-31

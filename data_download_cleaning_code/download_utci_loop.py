@@ -18,7 +18,7 @@ spt_root = 'C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/utci_china_19
 #snm_data = 'china_total_utci'
 #st_era5_prefix = "ECMWF_utci_"
 
-year = '1990'
+year = '1990' # year are not in the loop and need to be specified manually
 ar_days = ['01', '02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
 ar_coordiantes_area = [53.31, 73, 4.15, 135]
 

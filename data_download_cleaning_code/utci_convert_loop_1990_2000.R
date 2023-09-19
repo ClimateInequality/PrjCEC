@@ -1,4 +1,5 @@
 #goal: convert utci data in netCDF format from ERA5 to csv
+#data input from 1990 and 2000
 
 #instruction: 
 #structure of the raw data name from ERA5: "long-codes"-ECMWF_ucti_"yeardate", long-codes will be same for date within month, eg:
@@ -69,6 +70,9 @@ utci_ave_2000_hour <- list(vector(mode='list', length=31), vector(mode='list', l
 #utci_hour_1990 <- vector(mode='list',length=31)
 
 #derive key variables from netcdf file  dataFiles_year: lat, lon, time, utci
+#loop through months and then days
+#1990 and 2000 are in separated sections
+#output in either hourly csv or daily average csv, currently daily average codes are inactive
 ################################################################################
 # 1990
 for (t in 1:12) {

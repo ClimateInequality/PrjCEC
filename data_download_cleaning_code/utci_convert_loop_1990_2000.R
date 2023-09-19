@@ -1,9 +1,16 @@
+#goal: convert utci data in netCDF format from ERA5 to csv
+
+#instruction: 
+#structure of the raw data name from ERA5: "long-codes"-ECMWF_ucti_"yeardate", long-codes will be same for date within month, eg:
+#1990_01: c7c48ef9-5619-4759-a51b-598464e83e88-ECMWF_utci_19900101_v1_area_subset
+#manually copy the unique long-codes, 12 in total each year, read through all data by date using lapply
+
 library(ncdf4)
 library(tidyverse)
 library(imputeTS)
 library(lubridate)
 library(data.table)
-setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/utci_china_1982_2020")
+setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE_bigdata_prc/kai_feng/utci_china_1982_2020")
 
 dataFiles1990_01 <- lapply(Sys.glob("1990_01_utci/c7c48ef9-5619-4759-a51b-598464e83e88-ECMWF_utci_*.nc"), nc_open)
 dataFiles1990_02 <- lapply(Sys.glob("1990_02_utci/97dd92f8-0aa2-4db9-8ed1-b8a646ed8336-ECMWF_utci_*.nc"), nc_open)
@@ -37,6 +44,7 @@ dataFiles1990 <- list(dataFiles1990_01,dataFiles1990_02,dataFiles1990_03,dataFil
 dataFiles2000 <- list(dataFiles2000_01,dataFiles2000_02,dataFiles2000_03,dataFiles2000_04,dataFiles2000_05,dataFiles2000_06,
                       dataFiles2000_07,dataFiles2000_08,dataFiles2000_09,dataFiles2000_10,dataFiles2000_11,dataFiles2000_12)
 
+#create empty list, date nested in month, for looping
 utci_ave_1990 <- list(vector(mode='list', length=31), vector(mode='list', length=28),vector(mode='list', length=31),
                       vector(mode='list', length=30),vector(mode='list', length=31),vector(mode='list', length=30),
                       vector(mode='list', length=31),vector(mode='list', length=31),vector(mode='list', length=30),
@@ -60,7 +68,7 @@ utci_ave_2000_hour <- list(vector(mode='list', length=31), vector(mode='list', l
 
 #utci_hour_1990 <- vector(mode='list',length=31)
 
-
+#derive key variables from netcdf file  dataFiles_year: lat, lon, time, utci
 ################################################################################
 # 1990
 for (t in 1:12) {
@@ -178,7 +186,8 @@ for (t in 1:12) {
     print(i)
     
     utci_ave_2000_hour[[t]][[i]] <- utci_obs_hour
-    
+
+        
 #daily average    
     # utci_obs_ave <- utci_obs %>% 
     #   group_by(Long,Lat) %>%
@@ -196,8 +205,7 @@ for (t in 1:12) {
 
 
 
-
-
+#cleaning codes if daily average in used
 #utci_ave_1990_wide <- lapply(utci_ave_1990, rbindlist)
 #utci_ave_1990_wide <- do.call(rbind, utci_ave_1990_wide)
 
@@ -218,6 +226,9 @@ for (t in 1:12) {
 # write.csv(utci_ave_1990_wide,"utci_ave_1990.csv")
 # write.csv(utci_ave_2000_wide,"utci_ave_2000.csv")
 
+
+#removes all objects from the current R environment except for the object named utci_ave_1990_hour
+#this line of code (rm...) was added to clear unused memory but only save the named object to facilitate the following code
 rm(list = setdiff(ls(), "utci_ave_1990_hour"))
 utci_ave_1990_wide_hour <- lapply(utci_ave_1990_hour, rbindlist)
 rm(list = setdiff(ls(), "utci_ave_1990_wide_hour"))

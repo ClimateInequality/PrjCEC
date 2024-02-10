@@ -12,7 +12,11 @@ ls_st_files <- c(
     "dm_90h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
     "dm_90h24_share_gr_age_group_m3is0_14_all_locations.csv",
     "dm_20h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20h24_share_gr_age_group_m3is0_14_all_locations.csv"
+    "dm_20h24_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_90apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_90oct2mar_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_20apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_20oct2mar_share_gr_age_group_m3is0_14_all_locations.csv"
 )
 
 # 1. Generate and load four data files with the same structure for time-type/year 3 by 2 combos
@@ -24,6 +28,15 @@ spn_path <- file.path(spt_path_datares, ls_st_files[3], fsep = .Platform$file.se
 df_dm_20h6t22 <- read_csv(spn_path)
 spn_path <- file.path(spt_path_datares, ls_st_files[4], fsep = .Platform$file.sep)
 df_dm_20h24 <- read_csv(spn_path)
+# seasons files
+spn_path <- file.path(spt_path_datares, ls_st_files[5], fsep = .Platform$file.sep)
+df_dm_90apr2sep <- read_csv(spn_path)
+spn_path <- file.path(spt_path_datares, ls_st_files[6], fsep = .Platform$file.sep)
+df_dm_90oct2mar <- read_csv(spn_path)
+spn_path <- file.path(spt_path_datares, ls_st_files[7], fsep = .Platform$file.sep)
+df_dm_20apr2sep <- read_csv(spn_path)
+spn_path <- file.path(spt_path_datares, ls_st_files[8], fsep = .Platform$file.sep)
+df_dm_20oct2mar <- read_csv(spn_path)
 
 # 2. Stack outputs together to single file
 df_all <- bind_rows(
@@ -46,18 +59,38 @@ df_all <- bind_rows(
         mutate(
             daily_time = "0G_24",
             year = 2020
+        ),
+    df_dm_90apr2sep %>%
+        mutate(
+            daily_time = "2G_apr2sep",
+            year = 1990
+        ),
+    df_dm_90oct2mar %>%
+        mutate(
+            daily_time = "3G_oct2mar",
+            year = 1990
+        ),
+    df_dm_20apr2sep %>%
+        mutate(
+            daily_time = "2G_apr2sep",
+            year = 2020
+        ),
+    df_dm_20oct2mar %>%
+        mutate(
+            daily_time = "3G_oct2mar",
+            year = 2020
         )
 ) %>%
     select(
         # all 0 - 14 children
         -popgrp, -age_group_m3,
         # overall average (not children)
-        -pm10_overall_mean,
+        -expo_overall_mean,
         # no location differences, national average
         -all_locations
     ) %>%
     rename(
-        cdf = pm10_grp_mean,
+        cdf = expo_grp_mean,
         utci_thres = fl_temp_bound
     )
 
@@ -128,5 +161,30 @@ if (bl_main_save) {
     )
     write_csv(df_all_wide_tab_a, spn_path)
     print(glue::glue("F-203898, S3"))
+    print(glue::glue("File saved: {spn_path}"))
+}
+
+# 8. Reshape reasons from long to wide, out as input for Table B.
+df_all_wide_tab_b <- df_all_wide_fig_b %>%
+    pivot_wider(
+        id_cols = c("utci_thres"),
+        names_from = daily_time,
+        names_prefix = "time_",
+        values_from = c(
+            year_1990, year_2020, cdf_percpoint_chg, cdf_percent_chg
+        )
+    ) %>%
+    select(
+        utci_thres,
+        contains("apr2sep"),
+        contains("oct2mar")
+    )
+if (bl_main_save) {
+    spn_path <- file.path(
+        spt_path_res, "data_tab_b.csv",
+        fsep = .Platform$file.sep
+    )
+    write_csv(df_all_wide_tab_b, spn_path)
+    print(glue::glue("F-203898, S4"))
     print(glue::glue("File saved: {spn_path}"))
 }

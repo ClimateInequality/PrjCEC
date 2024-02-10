@@ -1,19 +1,21 @@
 # Implements Part 1 of https://github.com/ClimateInequality/PrjCEC/issues/34
 # Follows from `R-script/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_1990.R`
 
-# 0. Master controls -----
-# 1 = parallel gen results over thresholds, 2 = combine parallel results across thresholds
-ls_run <- c(1, 2)
-ls_run <- c(2)
-# ls_run <- c(1)
-
-# 1. Load libraries ------
+# 0. Load local script support ------
 source("R-script/ffs_pirecec_support.R")
+ls_script_controls <- ffs_run_set_params()
+it_nnodes <- ls_script_controls$it_nnodes
+ls_run <- ls_script_controls$ls_run
+ar_temp_bound <- ls_script_controls$ar_temp_bound 
+# 1 = parallel gen results over thresholds, 2 = combine parallel results across thresholds
+# ls_run <- c(1, 2)
+# ls_run <- c(2)
 
 # Load data managment and statistics packages
 library(readr)
 library(dplyr)
 library(tidyr)
+library(stringr)
 library(ggplot2)
 # library(tidyverse)
 
@@ -28,9 +30,10 @@ if (1 %in% ls_run) {
   # Get the number of cores
   it_n_cores_computer <- parallel::detectCores()
   glue::glue("Number of cores on computers:{it_n_cores_computer}")
+  glue::glue("Using these number of cores:{it_nnodes}")
   # Start cluster
   ob_cluster <- parallel::makeCluster(
-    10,
+    it_nnodes,
     type = "PSOCK"
   )
   # Register cluster
@@ -81,7 +84,7 @@ str_prefix_time <- "day"
 # 9. Stats to compute within year
 st_time_stats <- "share"
 # ar_temp_bound <- seq(1,1, by=1)
-ar_temp_bound <- seq(-40, 40, length.out = 81)
+# ar_temp_bound <- seq(-40, 40, length.out = 81)
 bl_greater <- TRUE
 
 # Sub_group of focus

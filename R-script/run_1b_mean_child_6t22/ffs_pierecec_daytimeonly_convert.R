@@ -1,4 +1,4 @@
-# Implements https://github.com/ClimateInequality/PrjCEC/issues/35
+# Implements Part 1 of https://github.com/ClimateInequality/PrjCEC/issues/35
 
 # 1. Load libraries ------
 source("R-script/ffs_pirecec_support.R")

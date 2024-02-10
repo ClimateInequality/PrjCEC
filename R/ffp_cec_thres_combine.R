@@ -130,10 +130,11 @@ ffp_demo_loc_thres_dist <- function(
     df_excburden_percentiles_keys <- df_excburden_percentiles_keys %>%
       drop_na(popgrp) %>%
       select(
+        stats_type,
         !!sym(str_prefix_demo), !!sym(stv_grp_demo), !!sym(stv_grp_loc),
         popgrp_mass,
-        pm10_grp_mean,
-        pm10_overall_mean,
+        expo_grp_mean,
+        expo_overall_mean,
         fl_temp_bound
       )
     # df_excburden_percentiles_keys_bl_oppo <- df_excburden_percentiles_keys_bl_oppo %>%

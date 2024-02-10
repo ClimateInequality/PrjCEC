@@ -1,3 +1,44 @@
+#' Local development script parameter control.
+#'
+#' We have a number of scripts, we want to control some core parameters
+#' in those scripts. The scripts are calling core functions, we just
+#' want some parameters to control the flow of scripts across multiple scripts.
+#'
+#' - Sets the number of cores to use for parallel processing
+#' - Sets whether to generate individual threshold files or aggregate
+#'
+#' @description Local development path support
+#'
+#' @return A list of parameters to control scripts
+#' @examples
+#' ls_script_controls <- ffs_run_set_params()
+#' it_nnodes <- ls_script_controls$it_nnodes
+#' ls_run <- ls_script_controls$ls_run
+#' @export
+#' @author Fan Wang, \url{http://fanwangecon.github.io}
+#'
+ffs_run_set_params <- function() {
+    # The number of nodes to be forked.
+    # https://www.rdocumentation.org/packages/parallel/versions/3.6.2/topics/makeCluster
+    # 10 on precision
+    it_nnodes <- 18
+
+    # 1 = genereate individual threshold files, 2 aggregate threshold individual files jointsly
+    ls_run <- c(1, 2)
+    # ls_run <- c(1)
+    # ls_run <- c(2)
+
+    # Temperature array to evaluate
+    # ar_temp_bound <- seq(1, 2, by = 1)
+    ar_temp_bound <- seq(-40, 40, length.out = 81)
+
+    return(list(
+        it_nnodes = it_nnodes,
+        ls_run = ls_run,
+        ar_temp_bound = ar_temp_bound
+    ))
+}
+
 #' Local developemnt path support
 #'
 #' @description Local development path support
@@ -7,7 +48,6 @@
 #' @author Fan Wang, \url{http://fanwangecon.github.io}
 #'
 ffs_pirecec_path_run <- function() {
-
     # 1. Get dropbox path
     spt_root_prj_main_dropbox_xps15 <- file.path(
         "C:", "Users", "fan",
@@ -17,7 +57,7 @@ ffs_pirecec_path_run <- function() {
     spt_root_prj_main_dropbox_vostro <- file.path(
         "C:", "Users", "fan",
         "Documents",
-        "Dropbox (UH-ECON)", 
+        "Dropbox (UH-ECON)",
         fsep = .Platform$file.sep
     )
 
@@ -34,16 +74,16 @@ ffs_pirecec_path_run <- function() {
 
     # 2. get r functions and source (outside of package usage)
     spt_cec_sandbox_r_func_fan <- file.path(
-        spt_root_prj_main_dropbox, 
-        "repos", "prjcec", 
+        spt_root_prj_main_dropbox,
+        "repos", "prjcec",
         "r",
         # "sandbox", "r", "function",
         fsep = .Platform$file.sep
     )
     spt_cec_sandbox_r_func <- spt_cec_sandbox_r_func_fan
     spt_cec_sandbox_r_func_fan <- file.path(
-        spt_root_prj_main_dropbox, 
-        "repos", "prjcec", 
+        spt_root_prj_main_dropbox,
+        "repos", "prjcec",
         "r",
         # "sandbox", "r", "function",
         fsep = .Platform$file.sep

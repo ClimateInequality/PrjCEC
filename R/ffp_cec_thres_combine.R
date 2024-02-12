@@ -16,7 +16,7 @@
 #' average exposure shown at STV_GRP_LOC X STV_GRP_DEMO level
 #' @param bl_save_img boolean store image
 #' @param bl_save_csv boolean store data
-#' @param snm_in_file_name_prefix string file name prefix for input csv
+#' @param snm_in_file_name_prefix_base string file name prefix for input csv
 #' @param snm_out_file_name_prefix_base string file prefix for output csv
 #' @param st_time_stats string for type of within year stats to compute, "mean" or "share"
 #' @param ar_temp_bound array for temperature bound if `st_time_stats` is share of days
@@ -212,6 +212,7 @@ ffp_demo_loc_thres_dist <- function(
         na = "0"
       )
       if (verbose_debug) {
+        print(glue::glue("F-105127, S1"))
         print(glue::glue(
           "All threshold subsetted file saved successfully: ",
           spn_output_file_subset
@@ -240,6 +241,7 @@ ffp_demo_loc_thres_dist <- function(
 
       readr::write_csv(df_temp_cdf_full_jnt_main, spn_output_file, na = "0")
       if (verbose_debug) {
+        print(glue::glue("F-105127, S2"))
         print(glue::glue(
           "All threshold joint file saved successfully: ", spn_output_file
         ))

@@ -425,6 +425,7 @@ ffp_demo_loc_env_inequality <- function(
 
     # Display
     if (verbose) {
+      print(glue::glue("F-566793, S1"))
       st_caption <- paste(
         "Share of population in each location and demographic cell",
         st_popgrp_disp, st_loc_disp,
@@ -460,6 +461,7 @@ ffp_demo_loc_env_inequality <- function(
 
     # Display
     if (verbose) {
+      print(glue::glue("F-566793, S2"))
       st_caption <- paste("Exposure across locations", st_loc_disp, sep = " ")
       tb_loc_pollution[ar_it_loc_disp, ] %>%
         kable(caption = st_caption) %>%
@@ -489,6 +491,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S3"))
     st_caption <- paste("Population x Location Long Frame (15 rows shown)", sep = " ")
     df_pop_pollution_long[
       round(seq(1, dim(df_pop_pollution_long)[1], length.out = 15)),
@@ -512,6 +515,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # Display
   if (verbose) {
+    print(glue::glue("F-566793, S4"))
     st_caption <- paste("Distribution within groups, sorted CDFs (15 rows shown)", sep = " ")
     df_pop_pollution_by_popgrp_cdf[
       round(seq(1, dim(df_pop_pollution_by_popgrp_cdf)[1], length.out = 15)),
@@ -568,6 +572,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S5"))
     st_caption <- paste("Mean and Excess Burden by Population Groups",
       st_popgrp_disp,
       sep = " "
@@ -609,6 +614,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S6"))
     st_caption <- paste("Exposure Distribution by Population Groups",
       st_popgrp_disp,
       sep = " "
@@ -637,6 +643,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S7"))
     st_caption <- paste("Exposure Distribution Overall", st_loc_disp, sep = " ")
     df_location_mean[ar_it_loc_disp, ] %>%
       kable(caption = st_caption) %>%
@@ -654,6 +661,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S8"))
     st_caption <- paste("Exposure Across Groups", st_popgrp_disp, sep = " ")
     df_popgrp_mean[ar_it_popgrp_disp, ] %>%
       kable(caption = st_caption) %>%
@@ -701,6 +709,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S9"))
     st_caption <- paste("Overall Exposure Distribution")
     df_location_mean_perc %>%
       kable(caption = st_caption) %>%
@@ -745,6 +754,7 @@ ffp_demo_loc_env_inequality <- function(
 
   # display
   if (verbose) {
+    print(glue::glue("F-566793, S10"))
     st_caption <- paste("Exposure within/across/overall Population Group P80-P20 Inequality",
       st_popgrp_disp,
       sep = " "
@@ -885,6 +895,7 @@ ffp_demo_loc_env_inequality <- function(
   )
   readr::write_csv(df_excburden_percentiles_keys, spn_output_file)
   if (verbose_debug) {
+    print(glue::glue("F-566793, S11"))
     print(glue::glue(
       "File saved successfully: ", spn_output_file
     ))

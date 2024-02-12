@@ -115,7 +115,7 @@ df_all_wide_fig_a <- df_all_wide %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_fig_a.csv",
+        spt_path_res, "fig_a_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_fig_a, spn_path)
@@ -126,8 +126,14 @@ if (bl_main_save) {
 # 4. National aggregate file for Table A
 # 4. Regional file for Table B
 df_all_wide_tab_a <- df_all_wide_fig_a %>%
-    filter(loc_level == "national") %>%
+    mutate(region_name = case_when(
+        loc_level == "national" ~ "National",
+        region_name == "Eastern" ~ "Eastern region",
+        region_name == "Northeastern" ~ "Northeastern region",
+        TRUE ~ region_name
+    )) %>%
     select(
+        region_name,
         utci_thres,
         contains("90pop90utci"),
         contains("20pop20utci"),
@@ -137,7 +143,7 @@ df_all_wide_tab_a <- df_all_wide_fig_a %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_tab_a.csv",
+        spt_path_res, "tab_a_nationalregional_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_tab_a, spn_path)
@@ -159,7 +165,7 @@ df_all_wide_tab_b <- df_all_wide_fig_a %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_tab_b.csv",
+        spt_path_res, "tab_b_region_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_tab_b, spn_path)

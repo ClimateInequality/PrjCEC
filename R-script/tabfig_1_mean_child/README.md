@@ -1,1 +1,1 @@
-Generate file, figure, table to implement [issue-36](https://github.com/ClimateInequality/PrjCEC/issues/36).
+Implements <https://github.com/ClimateInequality/PrjCEC/issues/36>.

@@ -83,7 +83,7 @@ df_all <- bind_rows(
 ) %>%
     select(
         # all 0 - 14 children
-        -popgrp, -age_group_m3,
+        -popgrp, -age_group_m3, -stats_type,
         # overall average (not children)
         -expo_overall_mean,
         # no location differences, national average
@@ -105,7 +105,7 @@ df_all_fig_a <- df_all %>%
     select(utci_thres, cdf, pmf, year)
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_fig_a.csv",
+        spt_path_res, "fig_a_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_fig_a, spn_path)
@@ -131,7 +131,7 @@ df_all_wide_fig_b <- df_all_wide %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_fig_b.csv",
+        spt_path_res, "fig_b_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_fig_b, spn_path)
@@ -156,7 +156,7 @@ df_all_wide_tab_a <- df_all_wide_fig_b %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_tab_a.csv",
+        spt_path_res, "tab_a_24vsday_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_tab_a, spn_path)
@@ -181,7 +181,7 @@ df_all_wide_tab_b <- df_all_wide_fig_b %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_tab_b.csv",
+        spt_path_res, "tab_b_season_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_tab_b, spn_path)

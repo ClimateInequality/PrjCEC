@@ -73,9 +73,9 @@ reshape %>%
   ) +
   theme(legend.position = "right") +
   labs(x = "\nUTCI(C°)",
-       y = "Percentage change\n",
+       y = "Percentage increase\n",
        col = "Hour selected",
-       size = "Percentage point change") +
+       size = "Percentage point increase") +
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_y_continuous(labels = scales::percent) +
   scale_color_manual(values = c("red", "blue")) +

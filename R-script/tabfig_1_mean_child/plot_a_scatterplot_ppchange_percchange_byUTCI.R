@@ -6,6 +6,10 @@ setwd(
   "C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_mean_child/"
 )
 tab_a_24vsday_data <- read.csv("tab_a_24vsday_data.csv")
+tab_b_season_data <- read.csv("tab_b_season_data.csv")
+
+
+
 
 #test graph
 tab_a_24vsday_data %>%
@@ -46,8 +50,15 @@ reshape <- cbind(
 )
 
 
+tab_b_season_data$hour_select <-"Hot months"
+tab_b_season_data_small <- tab_b_season_data[,c(1,10,4,5)]
+colnames(tab_b_season_data_small)<-colnames(reshape)
+reshape <- rbind(reshape,tab_b_season_data_small)
+
 # scatter plot show change in level and rate by UTCI threshold
-reshape %>%
+
+fig1_a<-
+  reshape %>%
   filter(utci_thres >= 26) %>%
   ggplot() +
   geom_point(
@@ -78,6 +89,53 @@ reshape %>%
        size = "Percentage point increase") +
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_y_continuous(labels = scales::percent) +
-  scale_color_manual(values = c("red", "blue")) +
+  scale_color_manual(values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
   scale_size(labels = scales::label_percent(scale = 100, suffix = "pp")) +
   ggtitle("")
+
+fig1_a
+
+
+fig1_b <-
+  reshape %>%
+  filter(utci_thres >= 26) %>%
+  ggplot() +
+  geom_point(
+    aes(
+      x = utci_thres,
+      y = cdf_percpoint_chg_time,
+      size = cdf_percent_chg_time,
+      color = hour_select
+    ),
+    shape = 21,
+    alpha = 10 / 10,
+    stroke = 1
+  ) +
+  theme_bw() +
+  theme(
+    #panel.border = element_blank(),
+    #panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    text = element_text(size = 20),
+    axis.text.y = element_text(size = 20),
+    axis.text.x = element_text(size = 20)
+  ) +
+  theme(legend.position = "right") +
+  labs(x = "\nUTCI(C°)",
+       y = "Percentage point increase\n",
+       col = "Hour selected",
+       size = "Percentage increase") +
+  scale_x_continuous(breaks = seq(26, 40, 2)) +
+  scale_y_continuous(labels = scales::label_percent(scale = 100, suffix = "pp"),
+                     breaks = seq(0, 0.05, 0.01)) +
+  scale_color_manual(values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
+  scale_size(labels = scales::percent) +
+  ggtitle("")
+
+fig1_b
+
+
+
+
+

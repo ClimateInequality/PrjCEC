@@ -37,9 +37,10 @@ spn_tex_out <- file.path(spt_path_res, "tab_a_24vsday.tex", fsep = .Platform$fil
 # drop temperatures between 9 and 26 degrees
 # upper bound less than
 ls_temp_bounds <- list(
-  "Very strong heat stress" = c(3, 38, 46),
-  "Strong heat stress" = c(2, 32, 38),
-  "Moderate heat stress" = c(1, 26, 32),
+  "Very strong heat stress" = c(4, 38, 46),
+  "At least strong heat stress" = c(3, 32, 38),
+  "At least moderate heat stress" = c(2, 26, 32),
+  "At least borderline thermal stress" = c(1, 23, 26),
   "Slight cold stress" = c(-1, 0, 9),
   "Moderate cold stress" = c(-2, -13, 0),
   "Strong cold stress" = c(-3, -27, -13),
@@ -244,8 +245,8 @@ for (st_kableformat in ar_st_kableformat) {
     # display text
     st_panel_letter <- base::LETTERS[it_group]
     # Heading group row, year
-    st_panel_text <- paste(
-      "Panel", st_panel_letter, ":", st_loc 
+    st_panel_text <- paste0(
+      "Panel ", st_panel_letter, ": ", st_loc 
     )
     # Add to table
     bk_tab_a <- bk_tab_a %>%

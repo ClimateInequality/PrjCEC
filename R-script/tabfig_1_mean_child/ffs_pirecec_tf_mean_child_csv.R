@@ -102,7 +102,8 @@ df_all <- df_all %>%
 
 # 4. Export file with pmf, cdf, time, threshold, time-type for Figure A.
 df_all_fig_a <- df_all %>%
-    select(utci_thres, cdf, pmf, year)
+    select(utci_thres, cdf, pmf, year) %>% 
+    rename(Year = year, utci = utci_thres)
 if (bl_main_save) {
     spn_path <- file.path(
         spt_path_res, "fig_a_data.csv",
@@ -124,12 +125,14 @@ df_all_wide <- df_all %>%
     )
 
 # 6. Based on cdf file Generate percentage points changes and percentage change columns, out as input for Figure B.
+# Do not save
+bl_save_b_data <- FALSE
 df_all_wide_fig_b <- df_all_wide %>%
     mutate(
         cdf_percpoint_chg = year_2020 - year_1990,
         cdf_percent_chg = (year_2020 - year_1990) / year_1990
     )
-if (bl_main_save) {
+if (bl_main_save && bl_save_b_data) {
     spn_path <- file.path(
         spt_path_res, "fig_b_data.csv",
         fsep = .Platform$file.sep

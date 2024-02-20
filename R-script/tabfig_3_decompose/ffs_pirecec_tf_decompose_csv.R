@@ -172,3 +172,6 @@ if (bl_main_save) {
     print(glue::glue("F-196308, S3"))
     print(glue::glue("File saved: {spn_path}"))
 }
+
+# 9. Generate outputs for Figure A. 
+

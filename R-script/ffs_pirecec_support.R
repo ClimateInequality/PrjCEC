@@ -21,7 +21,7 @@ ffs_run_set_params <- function() {
     # The number of nodes to be forked.
     # https://www.rdocumentation.org/packages/parallel/versions/3.6.2/topics/makeCluster
     # 10 on precision
-    it_nnodes <- 18
+    it_nnodes <- 10
 
     # 1 = genereate individual threshold files, 2 aggregate threshold individual files jointsly
     ls_run <- c(1, 2)
@@ -64,13 +64,16 @@ ffs_pirecec_path_run <- function() {
     # Checking if file exists
     if (file.exists(spt_root_prj_main_dropbox_xps15)) {
         spt_root_prj_main_dropbox <- spt_root_prj_main_dropbox_xps15
-        print(paste(spt_root_prj_main_dropbox_xps15, "exists"))
+        st_print <- paste(spt_root_prj_main_dropbox_xps15, "exists")
     } else if (file.exists(spt_root_prj_main_dropbox_vostro)) {
         spt_root_prj_main_dropbox <- spt_root_prj_main_dropbox_vostro
-        print(paste(spt_root_prj_main_dropbox_vostro, "exists", spt_root_prj_main_dropbox_xps15, "does not exist"))
+        st_print <- paste(spt_root_prj_main_dropbox_vostro, "exists", spt_root_prj_main_dropbox_xps15, "does not exist")
     } else {
-        print(paste(spt_root_prj_main_dropbox_xps15, spt_root_prj_main_dropbox_vostro, "both do does not exist"))
+        print(glue::glue("F-955325, S1c"))
+        st_print <- paste(spt_root_prj_main_dropbox_xps15, spt_root_prj_main_dropbox_vostro, "both do does not exist")
     }
+    print(glue::glue("F-955325, S1a"))
+    print(glue::glue("path: {st_print}"))
 
     # 2. get r functions and source (outside of package usage)
     spt_cec_sandbox_r_func_fan <- file.path(
@@ -92,6 +95,8 @@ ffs_pirecec_path_run <- function() {
     spt_path_func <- file.path(spt_cec_sandbox_r_func, "ffp_cec_aux.R", fsep = .Platform$file.sep)
     source(spt_path_func)
     spt_path_func <- file.path(spt_cec_sandbox_r_func, "ffp_cec_inequality_func.R", fsep = .Platform$file.sep)
+    source(spt_path_func)
+    spt_path_func <- file.path(spt_cec_sandbox_r_func, "ffp_cec_ineq_full_dist_func.R", fsep = .Platform$file.sep)
     source(spt_path_func)
     spt_path_func <- file.path(spt_cec_sandbox_r_func, "ffp_cec_thres_combine.R", fsep = .Platform$file.sep)
     source(spt_path_func)

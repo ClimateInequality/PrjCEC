@@ -97,7 +97,7 @@ df_all_wide_fig_a <- df_all_wide %>%
     )
 if (bl_main_save) {
     spn_path <- file.path(
-        spt_path_res, "data_fig_a.csv",
+        spt_path_res, "fig_a_data.csv",
         fsep = .Platform$file.sep
     )
     write_csv(df_all_wide_fig_a, spn_path)
@@ -110,10 +110,10 @@ ar_it_a12 <- c(1, 2)
 for (it_a12 in ar_it_a12) {
     if (it_a12 == 1) {
         ar_utci_group <- ar_utci_higher_group
-        snm_file_out <- "data_tab_a1.csv"
+        snm_file_out <- "tab_a1_strongheat_data.csv"
     } else if (it_a12 == 2) {
         ar_utci_group <- ar_utci_lower_group
-        snm_file_out <- "data_tab_a2.csv"
+        snm_file_out <- "tab_a2_moderateheat_data.csv"
     }
     df_all_wide_tab_a1or2 <- df_all_wide_fig_a %>%
         filter(utci_thres %in% ar_utci_group) %>%

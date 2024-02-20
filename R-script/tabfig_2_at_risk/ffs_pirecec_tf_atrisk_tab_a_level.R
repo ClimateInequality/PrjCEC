@@ -35,9 +35,10 @@ spn_tex_out <- file.path(spt_path_res, "tab_a_level.tex", fsep = .Platform$file.
 # drop temperatures between 9 and 26 degrees
 # upper bound less than
 ls_temp_bounds <- list(
-    "Very strong heat stress" = c(3, 38, 46),
-    "Strong heat stress" = c(2, 32, 38),
-    "Moderate heat stress" = c(1, 26, 32),
+    "Very strong heat stress" = c(4, 38, 46),
+    "At least strong heat stress" = c(3, 32, 38),
+    "At least moderate heat stress" = c(2, 26, 32),
+    "At least borderline thermal stress" = c(1, 23, 26),
     "Slight cold stress" = c(-1, 0, 9),
     "Moderate cold stress" = c(-2, -13, 0),
     "Strong cold stress" = c(-3, -27, -13),
@@ -163,7 +164,7 @@ for (st_kableformat in ar_st_kableformat) {
     # =1/3/2 are number of columns group title covers
     ar_st_col_groups_l2 <- c(
         " " = 1,
-        "Share of time in year thresholds and corresponding number of weeks" = 9
+        "Minimal share of time in year thresholds and corresponding number of weeks" = 9
     )
     ar_st_col_groups_l1 <- c(
         " " = 1,
@@ -222,8 +223,8 @@ for (st_kableformat in ar_st_kableformat) {
             }
             st_supra_panel_letter <- base::LETTERS[it_supra_grp_ctr]
             # Heading group row, year
-            st_supra_text <- paste(
-                "Panel", st_supra_panel_letter, ":", st_supra_grp_cur
+            st_supra_text <- paste0(
+                "Panel ", st_supra_panel_letter, ": ", st_supra_grp_cur
             )
             bk_tab_a <- bk_tab_a %>%
                 pack_rows(

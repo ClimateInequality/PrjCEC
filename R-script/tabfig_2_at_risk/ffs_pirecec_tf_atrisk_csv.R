@@ -128,3 +128,25 @@ if (bl_main_save) {
     print(glue::glue("F-813162, S2"))
     print(glue::glue("File saved: {spn_path}"))
 }
+
+# 9. Output for figure 1
+# Columns are temperature thresholds, and rows are shares
+# change show on in 2020 rows
+df_temp_cdf_jnt_fig <- df_temp_cdf_jnt_longer %>%
+  filter(stats == "cdf_comp" | stats == "cdf_comp_diff") %>% 
+  filter(utci_thres >= 20) %>%
+  pivot_wider(id_cols = c("year", "share_time", "stats"),
+              names_from = utci_thres,
+              names_prefix = "utci_",
+              values_from = value) %>% 
+  arrange(stats, year, share_time) %>% 
+  drop_na(utci_20)
+if (bl_main_save) {
+    spn_path <- file.path(
+        spt_path_res, "fig_a_data.csv",
+        fsep = .Platform$file.sep
+    )
+    write_csv(df_temp_cdf_jnt_fig, spn_path)
+    print(glue::glue("F-813162, S2"))
+    print(glue::glue("File saved: {spn_path}"))
+}

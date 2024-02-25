@@ -102,7 +102,16 @@ fig1_a<-
   ) +
   scale_y_continuous(labels = scales::percent) +
   scale_color_viridis(discrete = TRUE) +
-  ggtitle("")
+  ggtitle("")+
+  annotate("rect", xmin = 26, xmax = 32, ymin = 0, ymax = 1.1*max(reshape$cdf_percent_chg_time), fill = "#FFEBEB", alpha = 0.15) +
+  annotate("text", x = 29, y = 1.05 * max(reshape$cdf_percent_chg_time), label = "Moderate Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 32, xmax = 38, ymin = 0, ymax = 1.1*max(reshape$cdf_percent_chg_time), fill = "#FFB6C1", alpha = 0.15) +
+  annotate("text", x = 35, y = 1.05 * max(reshape$cdf_percent_chg_time), label = "Strong Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 38, xmax = 40, ymin = 0, ymax = 1.1*max(reshape$cdf_percent_chg_time), fill = "#FF69B4", alpha = 0.15) +
+  annotate("text", x = 39, y = 1.05 * max(reshape$cdf_percent_chg_time), label = "Very Strong\nHeat Stress", color = "black", size = 4, alpha = 0.7)
+
+
+
 
 fig1_a
 
@@ -118,8 +127,7 @@ fig1_b <-
       color = hour_select,
       shape = hour_select
     ),
-    size = 3,
-    alpha = 10 / 10,
+    size = 3
   ) +
   geom_line(
     aes(
@@ -151,10 +159,16 @@ fig1_b <-
     labels = function(x) paste("≥", x, "C°")
   ) +
   scale_y_continuous(labels = scales::label_percent(scale = 100, suffix = "pp"),
-                     breaks = seq(0, 0.05, 0.01)) +
+                     breaks = seq(0, 0.06, 0.01)) +
   scale_color_viridis(discrete = TRUE) +
   scale_size(labels = scales::percent) +
-  ggtitle("")
+  ggtitle("") +
+  annotate("rect", xmin = 26, xmax = 32, ymin = 0, ymax = 1.1*max(reshape$cdf_percpoint_chg_time), fill = "#FFEBEB", alpha = 0.15) +
+  annotate("text", x = 29, y = 1.05 * max(reshape$cdf_percpoint_chg_time), label = "Moderate Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 32, xmax = 38, ymin = 0, ymax = 1.1*max(reshape$cdf_percpoint_chg_time), fill = "#FFB6C1", alpha = 0.15) +
+  annotate("text", x = 35, y = 1.05 * max(reshape$cdf_percpoint_chg_time), label = "Strong Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 38, xmax = 40, ymin = 0, ymax = 1.1*max(reshape$cdf_percpoint_chg_time), fill = "#FF69B4", alpha = 0.15) +
+  annotate("text", x = 39, y = 1.05 * max(reshape$cdf_percpoint_chg_time), label = "Very Strong\nHeat Stress", color = "black", size = 4, alpha = 0.7)
 
 fig1_b
 

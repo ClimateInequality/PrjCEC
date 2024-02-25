@@ -69,12 +69,14 @@ fig1 <- ggplot(diff_2020_1990, aes(x = utci, y = share_time, fill = value*100)) 
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 13)
     ) +
-    labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+    labs(x = " ", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
     theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
     labels = function(x) paste("≥", x, "C°")
-  ) 
+  ) +
+  ggtitle("Panel C: Percentage 2020 - Percentage 1990")
+
 fig1
 
 fig2 <- ggplot(dat1990, aes(x = utci, y = share_time, fill = value*100)) +
@@ -93,12 +95,13 @@ fig2 <- ggplot(dat1990, aes(x = utci, y = share_time, fill = value*100)) +
     legend.text = element_text(size = 12),
     legend.title = element_text(size = 13)
   ) +
-  labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+  labs(x = " ", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
   theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
     labels = function(x) paste("≥", x, "C°")
-  ) 
+  ) +
+  ggtitle("Panel A: 1990")
 fig2
 
 fig3 <- ggplot(dat2020, aes(x = utci, y = share_time, fill = value*100)) +
@@ -117,12 +120,13 @@ fig3 <- ggplot(dat2020, aes(x = utci, y = share_time, fill = value*100)) +
     legend.text = element_text(size = 12),
     legend.title = element_text(size = 13)
   ) +
-  labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+  labs(x = " ", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
   theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
     labels = function(x) paste("≥", x, "C°")
-  ) 
+  ) +
+  ggtitle("Panel B: 2020")
 fig3
 
 
@@ -150,13 +154,15 @@ fig3
 #     theme(legend.position = "top")
 
 
-figure <- ggarrange(fig2 + rremove("ylab"), fig3 + rremove("ylab"), fig1 + rremove("ylab"),
-    ncol = 1,
-    labels = c("1990", "2020", "2020b - 1990")
-)
+figure <- ggarrange(fig2 + rremove("ylab") , 
+                    fig3 + rremove("ylab") , 
+                    fig1 + rremove("ylab") ,
+                    ncol = 1, 
+                    heights = c(1, 1, 1))
+
 
 figure <- annotate_figure(figure,
-    left = textGrob("Minimum Annual Share of Children's Hours\n", rot = 90, vjust = 0.5, gp = gpar(cex = 1.3)),
+    left = textGrob("At least y% of time\n", rot = 90, vjust = 0.5, gp = gpar(cex = 1.3)),
     bottom = textGrob("UTCI", gp = gpar(cex = 1.3))
 )
 figure

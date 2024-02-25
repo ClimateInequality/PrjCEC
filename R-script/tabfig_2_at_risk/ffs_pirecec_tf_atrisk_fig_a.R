@@ -9,6 +9,9 @@ library(ggpubr)
 library(grid)
 library(scales)
 
+# setwd local
+setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
+
 # File names
 bl_main_save <- TRUE
 verbose <- TRUE
@@ -23,119 +26,133 @@ dat_lvl_diff_1990_2020 <- read_csv(spn_path)
 # read_excel("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/cec_results/res_b_childrenatrisk/plot_data.xlsx", sheet = "1990")
 # dat2020 <-
 # read_excel("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/cec_results/res_b_childrenatrisk/plot_data.xlsx", sheet = "2020")
-dat1990 <- dat_lvl_diff_1990_2020 %>%
-    filter(stats == "cdf_comp", year == 1990)
+dat1990 <- 
+  dat_lvl_diff_1990_2020 %>%
+  filter(stats == "cdf_comp", year == 1990) %>%
+  select(-year,-stats,-utci_20,-utci_21,-utci_22,-utci_23,-utci_24,-utci_25,-utci_33,-utci_34,-utci_35,-utci_36,-utci_37,-utci_38,-utci_39,-utci_40) %>%
+  pivot_longer(2:8,names_to = "utci_thres", values_to = "value") %>%
+  filter(!share_time %in% c(0.08, 0.16, 0.24, 0.32)) %>%
+  mutate(utci = c(rep(26:32,5)),
+         type = "2020") 
+
 dat2020 <- dat_lvl_diff_1990_2020 %>%
-    filter(stats == "cdf_comp", year == 2020)
+    filter(stats == "cdf_comp", year == 2020) %>%
+  select(-year,-stats,-utci_20,-utci_21,-utci_22,-utci_23,-utci_24,-utci_25,-utci_33,-utci_34,-utci_35,-utci_36,-utci_37,-utci_38,-utci_39,-utci_40) %>%
+  pivot_longer(2:8,names_to = "utci_thres", values_to = "value") %>%
+  filter(!share_time %in% c(0.08, 0.16, 0.24, 0.32)) %>%
+  mutate(utci = c(rep(26:32,5)),
+         type = "2020")
+  
 diff_2020_1990 <- dat_lvl_diff_1990_2020 %>%
-    filter(stats == "cdf_comp_diff")
-
-diff_2020_1990 <- melt(as.matrix(diff_2020_1990), varnames = c("Row", "Column"))
-diff_2020_1990[diff_2020_1990$Row == 1, ]$Row <- 0.1
-diff_2020_1990[diff_2020_1990$Row == 2, ]$Row <- 0.2
-diff_2020_1990[diff_2020_1990$Row == 3, ]$Row <- 0.3
-diff_2020_1990$value <- diff_2020_1990$value * 100
-diff_2020_1990$type <- "2020 - 1990"
-
-dat1990 <- melt(as.matrix(dat1990), varnames = c("Row", "Column"))
-dat1990[dat1990$Row == 1, ]$Row <- 0.1
-dat1990[dat1990$Row == 2, ]$Row <- 0.2
-dat1990[dat1990$Row == 3, ]$Row <- 0.3
-dat1990$value <- dat1990$value * 100
-dat1990$type <- "1990"
-
-dat2020 <- melt(as.matrix(dat2020), varnames = c("Row", "Column"))
-dat2020[dat2020$Row == 1, ]$Row <- 0.1
-dat2020[dat2020$Row == 2, ]$Row <- 0.2
-dat2020[dat2020$Row == 3, ]$Row <- 0.3
-dat2020$value <- dat2020$value * 100
-dat2020$type <- "2020"
+  filter(stats == "cdf_comp_diff") %>%
+  select(-year,-stats,-utci_20,-utci_21,-utci_22,-utci_23,-utci_24,-utci_25,-utci_33,-utci_34,-utci_35,-utci_36,-utci_37,-utci_38,-utci_39,-utci_40) %>%
+  pivot_longer(2:8,names_to = "utci_thres", values_to = "value") %>%
+  filter(!share_time %in% c(0.08, 0.16, 0.24, 0.32)) %>%
+  mutate(utci = c(rep(26:32,5)),
+         type = "2020 - 1990") 
 
 dat <- rbind(diff_2020_1990, dat1990, dat2020)
 
-fig1 <- ggplot(diff_2020_1990 %>% filter(Column > 25), aes(x = Column, y = Row, fill = value)) +
+fig1 <- ggplot(diff_2020_1990, aes(x = utci, y = share_time, fill = value*100)) +
     geom_tile() +
-    geom_text(aes(label = sprintf("%.2f%%", value)), size = 8) +
-    scale_fill_gradient2(mid = "#FBFEF9", low = "#A63446", high = "#0C6291", breaks = seq(0, 10, 2)) +
+    geom_text(aes(label = sprintf("%.1f%%", value*100)), size = 4, alpha=0.7) +
+    scale_fill_gradient2(mid = "#FBFEF9", low = "#A63446", high = "#0C6291") +
     # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
     # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
     theme_classic() +
-    scale_y_reverse(labels = percent_format(scale = 100)) +
+    scale_y_reverse(breaks = seq(0.04, 0.36, 0.08),
+                    labels = function(x) paste("≥", percent_format()(x))) +
     theme(
-        text = element_text(size = 20),
-        axis.text.y = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
+        text = element_text(size = 13),
+        axis.text.y = element_text(size = 13),
+        axis.text.x = element_text(size = 13),
         legend.text = element_text(size = 12),
-        legend.title = element_text(size = 16)
+        legend.title = element_text(size = 13)
     ) +
-    labs(x = "\nUTCI(\u00B0C)", y = "Minimum Annual Share of Hours\n", fill = "Change in Percentage of Children from 1990 to 2020") +
+    labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
     theme(legend.position = "") +
-    scale_x_continuous(breaks = seq(26, 32, 1))
+  scale_x_continuous(
+    breaks = seq(26, 32, 1),
+    labels = function(x) paste("≥", x, "C°")
+  ) 
+fig1
 
-fig2 <- ggplot(dat1990 %>% filter(Column > 25), aes(x = Column, y = Row, fill = value)) +
-    geom_tile() +
-    geom_text(aes(label = sprintf("%.2f%%", value)), size = 8) +
-    scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
-    # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
-    # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
-    theme_classic() +
-    scale_y_reverse(labels = percent_format(scale = 100)) +
-    theme(
-        text = element_text(size = 20),
-        axis.text.y = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 16)
-    ) +
-    labs(x = "UTCI(\u00B0C)", y = "Minimum Annual Share of Children's Hours\n", fill = "Percentage of Children (%)") +
-    theme(legend.position = "top") +
-    scale_x_continuous(breaks = seq(26, 32, 1))
+fig2 <- ggplot(dat1990, aes(x = utci, y = share_time, fill = value*100)) +
+  geom_tile() +
+  geom_text(aes(label = sprintf("%.1f%%", value*100)), size = 4, alpha=0.7) +
+  scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
+  # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
+  # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
+  theme_classic() +
+  scale_y_reverse(breaks = seq(0.04, 0.36, 0.08),
+                  labels = function(x) paste("≥", percent_format()(x))) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 13)
+  ) +
+  labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+  theme(legend.position = "") +
+  scale_x_continuous(
+    breaks = seq(26, 32, 1),
+    labels = function(x) paste("≥", x, "C°")
+  ) 
+fig2
 
-fig3 <- ggplot(dat2020 %>% filter(Column > 25), aes(x = Column, y = Row, fill = value)) +
-    geom_tile() +
-    geom_text(aes(label = sprintf("%.2f%%", value)), size = 8) +
-    scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
-    # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
-    # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
-    theme_classic() +
-    scale_y_reverse(labels = percent_format(scale = 100)) +
-    theme(
-        text = element_text(size = 20),
-        axis.text.y = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 16)
-    ) +
-    labs(x = "UTCI(\u00B0C)", y = "Minimum Annual Share of Children's Hours\n", fill = "Percentage of Children (%)") +
-    theme(legend.position = "top") +
-    scale_x_continuous(breaks = seq(26, 32, 1))
+fig3 <- ggplot(dat2020, aes(x = utci, y = share_time, fill = value*100)) +
+  geom_tile() +
+  geom_text(aes(label = sprintf("%.1f%%", value*100)), size = 4, alpha=0.7) +
+  scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
+  # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
+  # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
+  theme_classic() +
+  scale_y_reverse(breaks = seq(0.04, 0.36, 0.08),
+                  labels = function(x) paste("≥", percent_format()(x))) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 13)
+  ) +
+  labs(x = "\nUTCI", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+  theme(legend.position = "") +
+  scale_x_continuous(
+    breaks = seq(26, 32, 1),
+    labels = function(x) paste("≥", x, "C°")
+  ) 
+fig3
 
-ggplot(dat, aes(x = Column, y = Row, fill = value)) +
-    geom_tile() +
-    geom_text(aes(label = sprintf("%.2f%%", value)), size = 4) +
-    # scale_fill_gradient2(mid="#FBFEF9",low="#0C6291",high="#A63446") +
-    scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100)) +
-    # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
-    facet_wrap(~type, scales = "free", ncol = 1) +
-    theme_classic() +
-    scale_y_reverse() +
-    theme(
-        # panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(colour = "black"),
-        text = element_text(size = 16),
-        axis.text.y = element_text(size = 16),
-        axis.text.x = element_text(size = 16),
-        legend.text = element_text(size = 12)
-    ) +
-    labs(x = "UTCI", y = "Minimum Annual Share of Children's Hours", fill = "Percentage of Children (%)") +
-    theme(legend.position = "top")
+
+
+# ggplot(dat, aes(x = Column, y = Row, fill = value)) +
+#     geom_tile() +
+#     geom_text(aes(label = sprintf("%.2f%%", value)), size = 4) +
+#     # scale_fill_gradient2(mid="#FBFEF9",low="#0C6291",high="#A63446") +
+#     scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100)) +
+#     # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
+#     facet_wrap(~type, scales = "free", ncol = 1) +
+#     theme_classic() +
+#     scale_y_reverse() +
+#     theme(
+#         # panel.border = element_blank(),
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank(),
+#         axis.line = element_line(colour = "black"),
+#         text = element_text(size = 13),
+#         axis.text.y = element_text(size = 13),
+#         axis.text.x = element_text(size = 13),
+#         legend.text = element_text(size = 12)
+#     ) +
+#     labs(x = "UTCI", y = "Minimum Annual Share of Children's Hours", fill = "Percentage of Children (%)") +
+#     theme(legend.position = "top")
 
 
 figure <- ggarrange(fig2 + rremove("ylab"), fig3 + rremove("ylab"), fig1 + rremove("ylab"),
     ncol = 1,
-    labels = c("   1990", "   2020", "2020b1990")
+    labels = c("1990", "2020", "2020b - 1990")
 )
 
 figure <- annotate_figure(figure,

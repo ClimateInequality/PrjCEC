@@ -254,8 +254,8 @@ ffp_demo_loc_thresdouble_time_heatcold <- function(
       df_temp_cdf_full_jnt_wide_sel <- df_temp_cdf_full_jnt_wide_sel %>%
         mutate(
           !!sym(st_col_share) :=
-            round(!!sym(st_col_share) * fl_round_multiple, 0) / fl_round_multiple
-            # ceiling(!!sym(st_col_share) * fl_round_multiple) / fl_round_multiple
+            # round(!!sym(st_col_share) * fl_round_multiple, 0) / fl_round_multiple
+            ceiling(!!sym(st_col_share) * fl_round_multiple) / fl_round_multiple
         ) %>%
         arrange(!!sym(st_col_share)) %>%
         group_by(!!sym(st_col_share)) %>%

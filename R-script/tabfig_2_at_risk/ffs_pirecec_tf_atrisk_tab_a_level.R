@@ -189,7 +189,7 @@ for (st_kableformat in ar_st_kableformat) {
         booktabs = T,
         longtable = T,
         align = "c",
-        caption = "Shares of children (ages 0--14) at risk of heat exposure",
+        caption = "Minimal shares of children (ages 0--14) at risk of heat exposure",
         col.names = ar_st_col_names
     ) %>%
         # see https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#Bootstrap_table_classes

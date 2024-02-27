@@ -22,13 +22,14 @@ counter_decom_long <- counter_decom %>%
   filter(region_name=="national") %>%
   select("region_name","utci_thres","cdf_percpoint_chg_20_v90","cdf_percpoint_chg_20utci_v90","cdf_percpoint_chg_20pop_v90") %>%
   pivot_longer(3:5,names_to = "label",values_to = "value") %>%
-  mutate(type = case_when(label == "cdf_percpoint_chg_20_v90" ~ "2020 - 1990",
+  mutate(type = case_when(label == "cdf_percpoint_chg_20_v90" ~ "2020 − 1990",
                           label == "cdf_percpoint_chg_20utci_v90" ~ "Scenario 1: Climate Effect",
                           label == "cdf_percpoint_chg_20pop_v90" ~ "Scenario 2: Population Effect"))
 
 fig3 <- counter_decom_long %>%
+  filter(utci_thres >=26) %>%
   ggplot() +
-  geom_vline(xintercept = 26, color = 'black', size = 1.2,linetype=3)+
+  #geom_vline(xintercept = 26, color = 'black', size = 1.2,linetype=3)+
   geom_line(aes(
     x = utci_thres,
     y = value,
@@ -43,21 +44,28 @@ fig3 <- counter_decom_long %>%
     #panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.line = element_line(colour = "black"),
-    text = element_text(size = 13),
-    axis.text.y = element_text(size = 13),
-    axis.text.x = element_text(size = 13),
-    legend.text = element_text(size = 16)
+    text = element_text(size = 20),
+    axis.text.y = element_text(size = 20),
+    axis.text.x = element_text(size = 20),
+    legend.text = element_text(size = 20)
   ) +
   theme(legend.position = "bottom") +
+  scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
-    breaks = seq(-40, 40, 10),
+    breaks = seq(26, 40, 2),
     labels = function(x) paste("≥", x, "C°")
   ) +
   scale_color_viridis(discrete = TRUE)+
   labs(x = "\nUTCI", y = "Percentage Point Deviation\n", col = "",linetype ="") +
   scale_y_continuous(labels = percent_format(scale = 100)) +
-  annotate("rect", xmin = 26, xmax = 40, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFB6C1", alpha = 0.3) +
-  annotate("text", x = 33, y = 1.05 * max(counter_decom_long$value), label = "Heat Stress", color = "black", size = 4, alpha = 0.7)
+  annotate("rect", xmin = 26, xmax = 32, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFEBEB", alpha = 0.15) +
+  annotate("text", x = 29, y = 1.05 * max(counter_decom_long$value), label = "Moderate Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 32, xmax = 38, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFB6C1", alpha = 0.15) +
+  annotate("text", x = 35, y = 1.05 * max(counter_decom_long$value), label = "Strong Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("rect", xmin = 38, xmax = 40, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FF69B4", alpha = 0.15) +
+  annotate("text", x = 39, y = 1.05 * max(counter_decom_long$value), label = "Very Strong\nHeat Stress", color = "black", size = 4, alpha = 0.7)
+
+  
 
 fig3
 

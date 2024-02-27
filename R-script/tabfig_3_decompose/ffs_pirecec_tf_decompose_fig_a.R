@@ -53,17 +53,17 @@ fig3 <- counter_decom_long %>%
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
     breaks = seq(26, 40, 2),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   scale_color_viridis(discrete = TRUE)+
   labs(x = "\nUTCI", y = "Percentage Point Deviation\n", col = "",linetype ="") +
   scale_y_continuous(labels = percent_format(scale = 100)) +
   annotate("rect", xmin = 26, xmax = 32, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFEBEB", alpha = 0.15) +
-  annotate("text", x = 29, y = 1.05 * max(counter_decom_long$value), label = "Moderate Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("text", x = 29, y = 1.05 * max(counter_decom_long$value), label = "Moderate Heat Stress", color = "black", size = 5, alpha = 0.7) +
   annotate("rect", xmin = 32, xmax = 38, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFB6C1", alpha = 0.15) +
-  annotate("text", x = 35, y = 1.05 * max(counter_decom_long$value), label = "Strong Heat Stress", color = "black", size = 4, alpha = 0.7) +
+  annotate("text", x = 35, y = 1.05 * max(counter_decom_long$value), label = "Strong Heat Stress", color = "black", size = 5, alpha = 0.7) +
   annotate("rect", xmin = 38, xmax = 40, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FF69B4", alpha = 0.15) +
-  annotate("text", x = 39, y = 1.05 * max(counter_decom_long$value), label = "Very Strong\nHeat Stress", color = "black", size = 4, alpha = 0.7)
+  annotate("text", x = 39, y = 1.05 * max(counter_decom_long$value), label = "Very Strong\nHeat Stress", color = "black", size = 5, alpha = 0.7)
 
   
 

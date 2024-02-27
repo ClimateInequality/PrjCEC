@@ -98,7 +98,7 @@ fig1_a<-
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
     breaks = seq(26, 40, 2),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   scale_y_continuous(labels = scales::percent) +
   scale_color_viridis(discrete = TRUE) +
@@ -156,7 +156,7 @@ fig1_b <-
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
     breaks = seq(26, 40, 2),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   scale_y_continuous(labels = scales::label_percent(scale = 100, suffix = "pp"),
                      breaks = seq(0, 0.06, 0.01)) +

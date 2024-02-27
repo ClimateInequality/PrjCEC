@@ -73,7 +73,7 @@ fig1 <- ggplot(diff_2020_1990, aes(x = utci, y = share_time, fill = value*100)) 
     theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   ggtitle("Panel C: Percentage 2020 - Percentage 1990")
 
@@ -99,7 +99,7 @@ fig2 <- ggplot(dat1990, aes(x = utci, y = share_time, fill = value*100)) +
   theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   ggtitle("Panel A: 1990")
 fig2
@@ -124,7 +124,7 @@ fig3 <- ggplot(dat2020, aes(x = utci, y = share_time, fill = value*100)) +
   theme(legend.position = "") +
   scale_x_continuous(
     breaks = seq(26, 32, 1),
-    labels = function(x) paste("≥", x, "C°")
+    labels = function(x) paste("≥", x, "°C")
   ) +
   ggtitle("Panel B: 2020")
 fig3

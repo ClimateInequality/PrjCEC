@@ -119,7 +119,7 @@ region %>%
   scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) +
   scale_fill_discrete(
     name = "UTCI",
-    labels = c("≥ 26 C°", "≥ 32 C°", "≥ 38 C°")
+    labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
   ) +
   theme(legend.position = "top") 
 

@@ -173,8 +173,8 @@ fig1_b <-
 fig1_b
 
 combined_plot <- ggarrange(
-  fig1_a + theme(legend.position = "none"),  # Remove legend from the first plot
-  fig1_b + theme(legend.position = "none"),  # Remove legend from the second plot
+  fig1_b + theme(legend.position = "none"),  # Remove legend from the first plot
+  fig1_a + theme(legend.position = "none"),  # Remove legend from the second plot
   ncol = 1, nrow = 2,
   common.legend = TRUE, legend = "bottom"
 )

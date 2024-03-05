@@ -20,12 +20,16 @@ spt_path_res <- file.path("res", "res_atrisk", fsep = .Platform$file.sep)
 spn_path <- file.path(spt_path_res, "fig_a_data.csv", fsep = .Platform$file.sep)
 dat_lvl_diff_1990_2020 <- read_csv(spn_path)
 
+change_path <- file.path(spt_path_res, "tab_b_change_data.csv", fsep=.Platform$file.sep)
+dat_lvl_change_1990_2020 <-read_csv(change_path)
+
 # diff_2020_1990 <-
 # read_excel("c:/users/kaifs/onedrive/documents/dropbox_penn/dropbox/pire/team/kai_feng/cec_results/res_b_childrenatrisk/plot_data.xlsx", sheet = "diff_2020_1990")
 # dat1990 <-
 # read_excel("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/cec_results/res_b_childrenatrisk/plot_data.xlsx", sheet = "1990")
 # dat2020 <-
 # read_excel("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/cec_results/res_b_childrenatrisk/plot_data.xlsx", sheet = "2020")
+
 dat1990 <- 
   dat_lvl_diff_1990_2020 %>%
   filter(stats == "cdf_comp", year == 1990) %>%
@@ -50,6 +54,41 @@ diff_2020_1990 <- dat_lvl_diff_1990_2020 %>%
   filter(!share_time %in% c(0.08, 0.16, 0.24, 0.32)) %>%
   mutate(utci = c(rep(26:32,5)),
          type = "2020 - 1990") 
+
+dat_change_1990_2020 <- dat_lvl_change_1990_2020 %>%
+  filter(stats == "cdf_comp_diff_ratio") %>%
+  filter(utci_thres %in% c(26)) %>% 
+  select(-year,-shrtime_8,-shrtime_16,-shrtime_24,-shrtime_32) %>%
+  pivot_longer(3:7,names_to = "share_time",values_to = "value") %>%
+  rename(utci=utci_thres) %>%
+  mutate(type = "2020/1990")
+
+
+dat_change_1990_2020 %>%
+  ggplot(aes(x = utci, y = share_time, fill = value*100)) +
+  geom_tile() +
+  geom_text(aes(label = sprintf("%.1f%%", value*100)), size = 4, alpha=0.7) +
+  scale_fill_gradient2(mid = "#FBFEF9", low = "#A63446", high = "#0C6291") +
+  # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
+  # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
+  theme_classic() +
+  scale_y_reverse(breaks = seq(0.04, 0.36, 0.08),
+                  labels = function(x) paste("≥", percent_format()(x))) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 13)
+  ) +
+  labs(x = " ", y = "At least y% of time\n", fill = "x%(cell) of cihldren") +
+  theme(legend.position = "") +
+  scale_x_continuous(
+    breaks = seq(26, 32, 1),
+    labels = function(x) paste("≥", x, "°C")
+  ) +
+  ggtitle("Panel C: Percentage 2020 - Percentage 1990")
+  
 
 dat <- rbind(diff_2020_1990, dat1990, dat2020)
 

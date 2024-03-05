@@ -98,7 +98,7 @@ region <- read_csv(spn_path)
 
 
 
-region %>%
+fig_pp <- region %>%
   filter(utci_thres >= 26, loc_level == "region") %>%
   filter(utci_thres %in% c(26, 28, 30, 32, 34, 38)) %>%
   filter(utci_thres %in% c(26, 32, 38)) %>%
@@ -109,17 +109,98 @@ region %>%
   theme(
     panel.grid.minor = element_blank(),
     axis.line = element_line(colour = "black"),
-    text = element_text(size = 20),
-    axis.text.y = element_text(size = 20),
-    axis.text.x = element_text(size = 20),
-    legend.text = element_text(size = 20),
-    legend.title = element_text(size = 20)
+    text = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16),
+    legend.text = element_text(size = 16),
+    legend.title = element_text(size = 16)
   ) +
-  labs(x = "\nRegion", y = "Percentage Point (pp) Change\n", col = "Year") +
+  labs(x = "\nRegion", y = "Percentage point (pp) change\n", col = "Year") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) +
   scale_fill_discrete(
     name = "UTCI",
     labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
   ) +
-  theme(legend.position = "top") 
+  theme(legend.position = "top") +
+  theme(
+    legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
+    legend.justification = c(0.5, 0),
+    legend.box.just = "left",
+    legend.background = element_blank()
+  ) +
+  geom_rect(aes(xmin = 3.39, xmax = 3.95, 
+                ymin = 0.031, ymax = 0.0395),
+            fill = "white", color = "black", size = 0.5)
+fig_pp
+# 
+# geom_rect(aes(xmin = 3.48, xmax = 3.9, 
+#               ymin = 0.031, ymax = 0.039),
 
+region_plot <- region %>%
+  filter(utci_thres >= 26, loc_level == "region") %>%
+  filter(utci_thres %in% c(26, 28, 30, 32, 34, 38)) %>%
+  filter(utci_thres %in% c(26, 32, 38)) %>%
+  mutate(UTCI = as.character(utci_thres))
+
+fig_1990 <- region_plot %>%
+  ggplot(aes(x = region_prov_name, y = year_1990, fill = UTCI)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    text = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16),
+    legend.text = element_text(size = 16),
+    legend.title = element_text(size = 16)
+  ) +
+  labs(x = "\nRegion", y = "Percentage\n", col = "Year") +
+  scale_y_continuous(labels = label_percent(scale = 100),limits=c(0,0.3)) +
+  scale_fill_discrete(
+    name = "UTCI",
+    labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
+  ) +
+  theme(legend.position = "top") +
+  theme(
+    legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
+    legend.justification = c(0.5, 0),
+    legend.box.just = "left",
+    legend.background = element_blank()
+  )+
+  geom_rect(aes(xmin = 3.39, xmax = 3.95,
+                ymin = 0.215, ymax = 0.269),
+            fill = "white", color = "black", size = 0.5)
+  
+fig_1990
+
+fig_2020 <- region_plot %>%
+  ggplot(aes(x = region_prov_name, y = year_2020, fill = UTCI)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    text = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16),
+    legend.text = element_text(size = 16),
+    legend.title = element_text(size = 16),
+    legend.position = "none"  # Hide the default legend
+  ) +
+  labs(x = "\nRegion", y = "Percentage\n", col = "Year") +
+  scale_y_continuous(labels = label_percent(scale = 100), limits = c(0, 0.3)) +
+  scale_fill_discrete(
+    name = "UTCI",
+    labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
+  ) +
+  theme(
+    legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
+    legend.justification = c(0.5, 0),
+    legend.box.just = "left",
+    legend.background = element_blank()
+  )+
+  geom_rect(aes(xmin = 3.39, xmax = 3.95,
+                ymin = 0.215, ymax = 0.269),
+            fill = "white", color = "black", size = 0.5)
+fig_2020

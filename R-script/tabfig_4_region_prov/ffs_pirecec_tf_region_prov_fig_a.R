@@ -126,11 +126,9 @@ fig_pp <- region %>%
     legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
     legend.justification = c(0.5, 0),
     legend.box.just = "left",
-    legend.background = element_blank()
-  ) +
-  geom_rect(aes(xmin = 3.39, xmax = 3.95, 
-                ymin = 0.031, ymax = 0.0395),
-            fill = "white", color = "black", size = 0.5)
+    legend.background = element_rect(fill = "white",color = "black")
+  )
+#geom_rect(aes(xmin = 3.39, xmax = 3.95, ymin = 0.031, ymax = 0.0395),fill = "white", color = "black", size = 0.5)
 fig_pp
 # 
 # geom_rect(aes(xmin = 3.48, xmax = 3.9, 
@@ -166,11 +164,11 @@ fig_1990 <- region_plot %>%
     legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
     legend.justification = c(0.5, 0),
     legend.box.just = "left",
-    legend.background = element_blank()
-  )+
-  geom_rect(aes(xmin = 3.39, xmax = 3.95,
-                ymin = 0.215, ymax = 0.269),
-            fill = "white", color = "black", size = 0.5)
+    legend.background = element_rect(fill = "white",color = "black")
+  )
+  #geom_rect(aes(xmin = 3.39, xmax = 3.95,
+  #              ymin = 0.215, ymax = 0.269),
+  #          fill = "white", color = "black", size = 0.5)
   
 fig_1990
 
@@ -198,9 +196,9 @@ fig_2020 <- region_plot %>%
     legend.position = c(0.8, 0.7),  # Adjust these values to position the legend
     legend.justification = c(0.5, 0),
     legend.box.just = "left",
-    legend.background = element_blank()
-  )+
-  geom_rect(aes(xmin = 3.39, xmax = 3.95,
-                ymin = 0.215, ymax = 0.269),
-            fill = "white", color = "black", size = 0.5)
+    legend.background = element_rect(fill = "white",color = "black")
+  )
+#+geom_rect(aes(xmin = 3.39, xmax = 3.95,
+#                ymin = 0.215, ymax = 0.269),
+#            fill = "white", color = "black", size = 0.5)
 fig_2020

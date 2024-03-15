@@ -102,7 +102,7 @@ fig1 <- ggplot(diff_2020_1990, aes(x = utci, y = share_time, fill = value*100)) 
     geom_tile() +
   geom_text(data = subset(diff_2020_1990, value != 0),
             aes(label = sprintf("%.1f%%", value * 100)),
-            size = 4, alpha = 0.7) +
+            size = 5, alpha = 0.7) +
     scale_fill_gradient2(mid = "#FBFEF9", low = "#A63446", high = "#0C6291") +
     # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
     # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
@@ -127,9 +127,9 @@ fig1
 
 fig2 <- ggplot(dat1990, aes(x = utci, y = share_time, fill = value*100)) +
   geom_tile() +
-  geom_text(data = subset(diff_2020_1990, value != 0),
+  geom_text(data = subset(dat1990, value != 0),
             aes(label = sprintf("%.1f%%", value * 100)),
-            size = 4, alpha = 0.7) +
+            size = 5, alpha = 0.7) +
   scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
   # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
   # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+
@@ -154,9 +154,9 @@ fig2
 
 fig3 <- ggplot(dat2020, aes(x = utci, y = share_time, fill = value*100)) +
   geom_tile() +
-  geom_text(data = subset(diff_2020_1990, value != 0),
+  geom_text(data = subset(dat2020, value != 0),
             aes(label = sprintf("%.1f%%", value * 100)),
-            size = 4, alpha = 0.7) +
+            size = 5, alpha = 0.7) +
   scale_fill_gradient2(mid = "#FBFEF9", low = "#0C6291", high = "#A63446") +
   # scale_fill_gradientn(colors = colorRampPalette(brewer.pal(9, "YlOrRd"))(100))+
   # scale_fill_gradientn(colors = rev(sequential_hcl(100,h = c(0, 0))))+

@@ -209,7 +209,7 @@ for (st_kableformat in ar_st_kableformat) {
     booktabs = T,
     longtable = T,
     align = "c",
-    caption = "Changes in regional average share of time exposed to strong and very strong heat",
+    caption = "Regional Average Share of Time at Risk of Exposure to Strong and Very Strong Heat Stress Thresholds for Children (ages 0-14), 1990 to 2020",
     col.names = ar_st_col_names
   ) %>%
     # see https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#Bootstrap_table_classes

@@ -130,6 +130,8 @@ df_all_wide_tab_a <- df_all_wide_fig_a %>%
         loc_level == "national" ~ "National",
         region_name == "Eastern" ~ "Eastern region",
         region_name == "Northeastern" ~ "Northeastern region",
+        region_name == "Western" ~ "Western region",
+        region_name == "Central" ~ "Central region",
         TRUE ~ region_name
     )) %>%
     select(

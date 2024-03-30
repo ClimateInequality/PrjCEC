@@ -63,7 +63,7 @@ st_file_key_popgrp <- "df_key_demo_china_census_2020.csv"
 # 5.2 Name of the loc key file:
 st_file_key_loc <- "df_key_loc_china_coord2county_2020.csv"
 # 5.3 Name of the higher-loc-key file:
-st_file_key_loc_agg <- "region_df_key_loc_china_county2province_2020.csv"
+st_file_key_loc_agg <- "df_key_loc_china_county2province_2020.csv"
 
 # 6. Variable names for population groups -----
 str_prefix_demo <- "popgrp"

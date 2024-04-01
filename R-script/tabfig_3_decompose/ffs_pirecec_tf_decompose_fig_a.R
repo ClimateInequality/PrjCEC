@@ -82,4 +82,6 @@ fig3 <- counter_decom_long %>%
   
 
 fig3
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_decompose/fig_3_decompose.pdf", plot = fig3, width = 11.69, height = 6.27, device = cairo_pdf)
+
 

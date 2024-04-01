@@ -53,7 +53,7 @@ reshape <- cbind(
 )
 
 
-tab_b_season_data$hour_select <-"April-Septermber hours"
+tab_b_season_data$hour_select <-"April-September hours"
 tab_b_season_data_small <- tab_b_season_data[,c(1,10,4,5)]
 colnames(tab_b_season_data_small)<-colnames(reshape)
 reshape <- rbind(reshape,tab_b_season_data_small)
@@ -98,7 +98,7 @@ fig1_b<-
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
     breaks = seq(26, 40, 2),
-    labels = function(x) paste("≥", x, "  °C")
+    labels = function(x) paste("\u2265", x, " °C")
   ) +
   scale_y_continuous(labels = scales::percent) +
   scale_color_viridis(discrete = TRUE) +
@@ -118,6 +118,7 @@ fig1_b<-
             fill = "white", color = "black", size = 0.5)
 
 fig1_b
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_mean_child/fig_1_b_mean_child_perc.pdf", plot = fig1_b, width = 11.69, height = 6.27, device = cairo_pdf)
 
 
 fig1_a <-
@@ -160,7 +161,7 @@ fig1_a <-
   scale_x_continuous(breaks = seq(26, 40, 2)) +
   scale_x_continuous(
     breaks = seq(26, 40, 2),
-    labels = function(x) paste("≥", x, " °C")
+    labels = function(x) paste("\u2265", x, " °C")
   ) +
   scale_y_continuous(labels = scales::label_percent(scale = 100, suffix = "pp"),
                      breaks = seq(0, 0.06, 0.01)) +
@@ -188,6 +189,7 @@ fig1_a <-
             fill = "white", color = "black", size = 0.5)
 
 fig1_a
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_mean_child/fig_1_a_mean_child_pp.pdf", plot = fig1_a, width = 11.69, height = 6.27, device = cairo_pdf)
 
 combined_plot <- ggarrange(
   fig1_a + theme(legend.position = "none"),  # Remove legend from the first plot

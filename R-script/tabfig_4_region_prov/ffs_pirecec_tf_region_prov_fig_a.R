@@ -116,7 +116,7 @@ fig_pp <- region %>%
     legend.title = element_text(size = 16)
   ) +
   labs(x = "\nRegion", y = "Percentage point (pp) change\n", col = "Year") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1L),limits=c(0,0.05)) +
   scale_fill_discrete(
     name = "UTCI",
     labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
@@ -130,6 +130,8 @@ fig_pp <- region %>%
   )
 #geom_rect(aes(xmin = 3.39, xmax = 3.95, ymin = 0.031, ymax = 0.0395),fill = "white", color = "black", size = 0.5)
 fig_pp
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_c_region_pp.pdf", plot = fig_pp, width = 11.69, height = 5, device = cairo_pdf)
+
 # 
 # geom_rect(aes(xmin = 3.48, xmax = 3.9, 
 #               ymin = 0.031, ymax = 0.039),
@@ -171,6 +173,8 @@ fig_1990 <- region_plot %>%
   #          fill = "white", color = "black", size = 0.5)
   
 fig_1990
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_a_region_1990.pdf", plot = fig_1990, width = 11.69, height = 5, device = cairo_pdf)
+
 
 fig_2020 <- region_plot %>%
   ggplot(aes(x = region_prov_name, y = year_2020, fill = UTCI)) +
@@ -202,3 +206,5 @@ fig_2020 <- region_plot %>%
 #                ymin = 0.215, ymax = 0.269),
 #            fill = "white", color = "black", size = 0.5)
 fig_2020
+ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_b_region_2020.pdf", plot = fig_2020, width = 11.69, height = 5, device = cairo_pdf)
+

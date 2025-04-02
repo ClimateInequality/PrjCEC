@@ -1,0 +1,39 @@
+year,popgrp_key,gender,age_group,var_name,label,all_groups,age_group_m3
+2020,popgrp1,male,00_00,A107005,Total Males at 0 Age,1,0_14
+2020,popgrp2,female,00_00,A107006,Total Females at 0 Age,1,0_14
+2020,popgrp3,male,01_04,A107008,Total Males at 1-4 Age,1,0_14
+2020,popgrp4,female,01_04,A107009,Total Females at 1-4 Age,1,0_14
+2020,popgrp5,male,05_09,A107011,Total Males at 5-9 Age,1,0_14
+2020,popgrp6,female,05_09,A107012,Total Females at 5-9 Age,1,0_14
+2020,popgrp7,male,10_14,A107014,Total Males at 10-14 Age,1,0_14
+2020,popgrp8,female,10_14,A107015,Total Females at 10-14 Age,1,0_14
+2020,popgrp9,male,15_19,A107017,Total Males at 15-19 Age,1,15_64
+2020,popgrp10,female,15_19,A107018,Total Females at 15-19 Age,1,15_64
+2020,popgrp11,male,20_24,A107020,Total Males at 20-24 Age,1,15_64
+2020,popgrp12,female,20_24,A107021,Total Females at 20-24 Age,1,15_64
+2020,popgrp13,male,25_29,A107023,Total Males at 25-29 Age,1,15_64
+2020,popgrp14,female,25_29,A107024,Total Females at 25-29 Age,1,15_64
+2020,popgrp15,male,30_34,A107026,Total Males at 30-34 Age,1,15_64
+2020,popgrp16,female,30_34,A107027,Total Females at 30-34 Age,1,15_64
+2020,popgrp17,male,35_39,A107029,Total Males at 35-39 Age,1,15_64
+2020,popgrp18,female,35_39,A107030,Total Females at 35-39 Age,1,15_64
+2020,popgrp19,male,40_44,A107032,Total Males at 40-44 Age,1,15_64
+2020,popgrp20,female,40_44,A107033,Total Females at 40-44 Age,1,15_64
+2020,popgrp21,male,45_49,A107035,Total Males at 45-49 Age,1,15_64
+2020,popgrp22,female,45_49,A107036,Total Females at 45-49 Age,1,15_64
+2020,popgrp23,male,50_54,A107038,Total Males at 50-54 Age,1,15_64
+2020,popgrp24,female,50_54,A107039,Total Females at 50-54 Age,1,15_64
+2020,popgrp25,male,55_59,A107041,Total Males at 55-59 Age,1,15_64
+2020,popgrp26,female,55_59,A107042,Total Females at 55-59 Age,1,15_64
+2020,popgrp27,male,60_64,A107044,Total Males at 60-64 Age,1,15_64
+2020,popgrp28,female,60_64,A107045,Total Females at 60-64 Age,1,15_64
+2020,popgrp29,male,65_69,A107047,Total Males at 65-69 Age,1,65_85
+2020,popgrp30,female,65_69,A107048,Total Females at 65-69 Age,1,65_85
+2020,popgrp31,male,70_74,A107050,Total Males at 70-74 Age,1,65_85
+2020,popgrp32,female,70_74,A107051,Total Females at 70-74 Age,1,65_85
+2020,popgrp33,male,75_79,A107053,Total Males at 75-79 Age,1,65_85
+2020,popgrp34,female,75_79,A107054,Total Females at 75-79 Age,1,65_85
+2020,popgrp35,male,80_84,A107056,Total Males at 80-84 Age,1,65_85
+2020,popgrp36,female,80_84,A107057,Total Females at 80-84 Age,1,65_85
+2020,popgrp37,male,85_85,A107070,Total Males at 85 Age and over,1,65_85
+2020,popgrp38,female,85_85,A107071,Total Females at 85 Age and over,1,65_85

@@ -1,0 +1,37 @@
+year,popgrp_key,gender,age_group,all_groups,age_group_m3,label
+1990,popgrp1,male,00_04,1,0_14,Total Males at 0-4 Age
+1990,popgrp2,female,00_04,1,0_14,Total Females at 0-4 Age
+1990,popgrp3,male,05_09,1,0_14,Total Males at 5-9 Age
+1990,popgrp4,female,05_09,1,0_14,Total Females at 5-9 Age
+1990,popgrp5,male,10_14,1,0_14,Total Males at 10-14 Age
+1990,popgrp6,female,10_14,1,0_14,Total Females at 10-14 Age
+1990,popgrp7,male,15_19,1,15_64,Total Males at 15-19 Age
+1990,popgrp8,female,15_19,1,15_64,Total Females at 15-19 Age
+1990,popgrp9,male,20_24,1,15_64,Total Males at 20-24 Age
+1990,popgrp10,female,20_24,1,15_64,Total Females at 20-24 Age
+1990,popgrp11,male,25_29,1,15_64,Total Males at 25-29 Age
+1990,popgrp12,female,25_29,1,15_64,Total Females at 25-29 Age
+1990,popgrp13,male,30_34,1,15_64,Total Males at 30-34 Age
+1990,popgrp14,female,30_34,1,15_64,Total Females at 30-34 Age
+1990,popgrp15,male,35_39,1,15_64,Total Males at 35-39 Age
+1990,popgrp16,female,35_39,1,15_64,Total Females at 35-39 Age
+1990,popgrp17,male,40_44,1,15_64,Total Males at 40-44 Age
+1990,popgrp18,female,40_44,1,15_64,Total Females at 40-44 Age
+1990,popgrp19,male,45_49,1,15_64,Total Males at 45-49 Age
+1990,popgrp20,female,45_49,1,15_64,Total Females at 45-49 Age
+1990,popgrp21,male,50_54,1,15_64,Total Males at 50-54 Age
+1990,popgrp22,female,50_54,1,15_64,Total Females at 50-54 Age
+1990,popgrp23,male,55_59,1,15_64,Total Males at 55-59 Age
+1990,popgrp24,female,55_59,1,15_64,Total Females at 55-59 Age
+1990,popgrp25,male,60_64,1,15_64,Total Males at 60-64 Age
+1990,popgrp26,female,60_64,1,15_64,Total Females at 60-64 Age
+1990,popgrp27,male,65_69,1,65_85,Total Males at 65-69 Age
+1990,popgrp28,female,65_69,1,65_85,Total Females at 65-69 Age
+1990,popgrp29,male,70_74,1,65_85,Total Males at 70-74 Age
+1990,popgrp30,female,70_74,1,65_85,Total Females at 70-74 Age
+1990,popgrp31,male,75_79,1,65_85,Total Males at 75-79 Age
+1990,popgrp32,female,75_79,1,65_85,Total Females at 75-79 Age
+1990,popgrp33,male,80_84,1,65_85,Total Males at 80-84 Age
+1990,popgrp34,female,80_84,1,65_85,Total Females at 80-84 Age
+1990,popgrp35,male,85_85,1,65_85,Total Males at 85 Age and over
+1990,popgrp36,female,85_85,1,65_85,Total Females at 85 Age and over

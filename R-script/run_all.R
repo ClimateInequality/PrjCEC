@@ -2,10 +2,12 @@ ar_it_results_set <- c(
     11, 12, 13,
     21,
     31, 32,
-    41, 42
+    41, 42, 
+    51
 )
 ar_it_results_set <- c(21)
-# ar_it_results_set <- c(32)
+# ar_it_results_set <- c(32, 41)
+ar_it_results_set <- c(32)
 
 if (11 %in% ar_it_results_set) {
     # all 24 hours
@@ -46,4 +48,8 @@ if (42 %in% ar_it_results_set) {
     # provincial results, 24 hours
     source("R-script/run_4b_mean_child_all24_by_province/ffs_pirecec_demo_loc_prov_1990_par.R")
     source("R-script/run_4b_mean_child_all24_by_province/ffs_pirecec_demo_loc_prov_2020_par.R")
+}
+if (51 %in% ar_it_results_set) {
+    # grid count table files
+    source("R-script/run_5a_loc_pop_grid/ffs_pirecec_counts.R")
 }

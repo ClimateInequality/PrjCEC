@@ -26,9 +26,9 @@ Including additional years of data, no additional changes needed between Steps 2
 
 The following codes and alterations result in the replication of our results indicating the percentage and percentage point change of children at risk for varying levels of heat stress between Time 1 and Time 2. These instruction generates output inside the `res/res_atrisk` folder and codes are inside the `R-script/tabfig_2_at_risk` folder. 
 
-# Note for Fan: Are we assuming that replicators would maintain the naming conventions we have built into where data outputs are being stored? If so some of the setting paths below might be unneccessary.
+#### Note for Fan: Are we assuming that replicators would maintain the naming conventions we have built into where data outputs are being stored? If so some of the setting paths below might be unneccessary.
 
-# Also for the ls_st_files, how should we approach describing these?
+#### Also for the ls_st_files, how should we approach describing these?
 
 - `R-script/tabfig_2_at_risk/ffs_pirecec_tf_atrisk_csv.R`: Steps 1 and 2. Input data for the below tables and figures
     - Install all packages
@@ -119,7 +119,7 @@ The following codes and alterations result in the replication of our results ind
     - Run all code
     - Results in fig1_b_mean_child_perc.pdf, fig_1_a_mean_child_pp.pdf
 
-# Seems to be an issue between these two steps. `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_season_tab_b.R` has the WD set to `/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_mean_child/res/res_mean_child/tab_b_season_data.csv` which is incorrect. I am unable to change the WD in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_season_tab_b.R` but I can change it in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_fig.R`. Check with Fan, solution might be to change the WD and input path in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_fig.R`
+#### Seems to be an issue between these two steps. `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_season_tab_b.R` has the WD set to `/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_mean_child/res/res_mean_child/tab_b_season_data.csv` which is incorrect. I am unable to change the WD in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_season_tab_b.R` but I can change it in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_fig.R`. Check with Fan, solution might be to change the WD and input path in `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_fig.R`
 
 - `R-script/tabfig_1_mean_child/ffs_pirecec_tf_mean_child_season_tab_b.R`: Table B.2
     - Install all packages
@@ -132,8 +132,18 @@ The following codes and alterations result in the replication of our results ind
 ### Part 4: res/res_pop_grid_cnty
 
 # Warning: similar named R files
-- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_grid_by_cnty.R`
-- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_grid_by_cnty.R`
+
+
+- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_grid_by_cnty.R`: Location Unknown
+
+
+- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_grid_by_cnty.R` : LaTex for Step 4
+
+
+- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_pop_by_cnty.R`: Location unknown
+
+
+- `R-script/tabfig_5_loc_pop_grid/ffs_pirecec_tf_loc_grid_by_cnty.R` : LaTex for Step 4
 
 
 ### Part 5: res/res_region_prov 
@@ -154,7 +164,18 @@ The following codes and alterations result in the replication of our results ind
     - Results in fig_4_c_region_pp.pdf, fig_4_a_region_1990.pdf, fig_4_b_region_2020.pdf
 
 
-- `R-script/tabfig_4_region_prov/ffs_pirecec_tf_region_prov_tab_a1_strongheat.R`: Step 3. Table 
+- `R-script/tabfig_4_region_prov/ffs_pirecec_tf_region_prov_tab_a1_strongheat.R`: Step 3. Table B.7
+    - Install all packages
+    - Set input path for tab_a1_strongheat_data.csv through spt_path_res and spn_path
+    - Set output path for tab_a1_strongheat.tex through spn_tex_out
+    - Run all code
+    - Results in tab_a1_strongheat.tex
 
 
-- `R-script/tabfig_4_region_prov/ffs_pirecec_tf_region_prov_tab_a2_moderateheat.R`: Step 3. Table 
+- `R-script/tabfig_4_region_prov/ffs_pirecec_tf_region_prov_tab_a2_moderateheat.R`: Step 3. Table B.8
+    - Install all packages
+    - Set input path for tab_a2_moderateheat_data.csv through spt_path_res and spn_path
+    - Set output path for tab_a2_moderateheat.tex through spn_tex_out
+    - Run all code
+    - Results in tab_a2_moderateheat.tex
+

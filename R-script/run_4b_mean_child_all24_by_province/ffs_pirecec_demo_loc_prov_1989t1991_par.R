@@ -49,13 +49,13 @@ spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file
 # Results/data output folder
 spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_loc_par", "prov_1990",
+  "ineq_results", "ineq_demo_loc_par", "prov_1989t1991",
   fsep = .Platform$file.sep
 )
 
 # 4. Data file names -----
 st_file_demo <- "df_china_census_county_1990.csv"
-st_file_envir <- "df_era5_utci_china_1990_hour.csv"
+st_file_envir <- "df_era5_utci_china_1989_1991_hour.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file
@@ -95,7 +95,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dmloc_90prov"
+snm_out_file_name_prefix_base <- "dmloc_89t91prov"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

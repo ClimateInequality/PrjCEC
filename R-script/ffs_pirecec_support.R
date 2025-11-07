@@ -17,20 +17,24 @@
 #' @export
 #' @author Fan Wang, \url{http://fanwangecon.github.io}
 #'
+#' 
+
+# NOTE THAT CURRENT CONFIGURATION IS SET TO MARCO'S DROPBOX FOR REPLICATION/EXTENSION
+
 ffs_run_set_params <- function() {
     # The number of nodes to be forked.
     # https://www.rdocumentation.org/packages/parallel/versions/3.6.2/topics/makeCluster
     # 10 on precision
-    it_nnodes <- 10
+    it_nnodes <- 4
 
     # 1 = genereate individual threshold files, 2 aggregate threshold individual files jointsly
-    ls_run <- c(1, 2)
-    # ls_run <- c(1)
-    # ls_run <- c(2)
+    #ls_run <- c(1, 2)
+     ls_run <- c(1,2)
+     #ls_run <- c(2)
 
     # Temperature array to evaluate
     # ar_temp_bound <- seq(1, 2, by = 1)
-    ar_temp_bound <- seq(-40, 40, length.out = 81)
+    ar_temp_bound <- seq(-40, 40, by = 1)
 
     return(list(
         it_nnodes = it_nnodes,
@@ -50,16 +54,21 @@ ffs_run_set_params <- function() {
 ffs_pirecec_path_run <- function() {
     # 1. Get dropbox path
     spt_root_prj_main_dropbox_xps15 <- file.path(
-        "C:", "Users", "fan",
-        "Dropbox (UH-ECON)",
+        "/Users", "mlaghi", "Dropbox", "PIRE", "team", "marco_laghi",
+        "PrjCECReplicate",
         fsep = .Platform$file.sep
-    )
+    ) 
     spt_root_prj_main_dropbox_vostro <- file.path(
-        "C:", "Users", "fan",
-        "Documents",
-        "Dropbox (UH-ECON)",
+        "/Users", "mlaghi", "Dropbox", "PIRE", "team", "marco_laghi",
+        "PrjCECReplicate",
         fsep = .Platform$file.sep
     )
+
+    spt_root_prj_main_dropbox  <- file.path(
+        "/Users", "mlaghi", "Dropbox", "PIRE", "team", "marco_laghi",
+        "PrjCECReplicate",
+        fsep = .Platform$file.sep
+    ) 
 
     # Checking if file exists
     if (file.exists(spt_root_prj_main_dropbox_xps15)) {
@@ -78,16 +87,12 @@ ffs_pirecec_path_run <- function() {
     # 2. get r functions and source (outside of package usage)
     spt_cec_sandbox_r_func_fan <- file.path(
         spt_root_prj_main_dropbox,
-        "repos", "prjcec",
-        "r",
         # "sandbox", "r", "function",
         fsep = .Platform$file.sep
     )
     spt_cec_sandbox_r_func <- spt_cec_sandbox_r_func_fan
     spt_cec_sandbox_r_func_fan <- file.path(
         spt_root_prj_main_dropbox,
-        "repos", "prjcec",
-        "r",
         # "sandbox", "r", "function",
         fsep = .Platform$file.sep
     )
@@ -103,7 +108,7 @@ ffs_pirecec_path_run <- function() {
 
     # 3. kf folders
     spt_pire_team_kf <- file.path(
-        spt_root_prj_main_dropbox, "PIRE", "team", "kai_feng",
+        spt_root_prj_main_dropbox,
         fsep = .Platform$file.sep
     )
 
@@ -121,3 +126,4 @@ ffs_pirecec_path_run <- function() {
         spt_pire_team_kf = spt_pire_team_kf
     ))
 }
+

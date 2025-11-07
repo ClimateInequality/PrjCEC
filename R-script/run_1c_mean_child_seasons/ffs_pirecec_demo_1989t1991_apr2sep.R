@@ -1,5 +1,4 @@
-# Implements Part 2 of https://github.com/ClimateInequality/PrjCEC/issues/30
-# Follows from `cec_code/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_1990.R`
+# Implements Part 3 of https://github.com/ClimateInequality/PrjCEC/issues/34
 
 # 0. Load local script support ------
 source("R-script/ffs_pirecec_support.R")
@@ -40,22 +39,22 @@ if (1 %in% ls_run) {
   doParallel::registerDoParallel(cl = ob_cluster)
 }
 
-# 3. Get paths, constructed in `cec_code/ff_pirecec_support.R`
+# 3. Get paths, constructed in `R-script/ffs_pirecec_support.R`
 ls_paths <- ffs_pirecec_path_run()
 spt_cec_sandbox_r_func <- ls_paths$spt_cec_sandbox_r_func
 spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path(spt_pire_team_kf, "data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_loc_par", "prov_1990",
+  "ineq_results", "ineq_demo_par", "1989_1991_apr2sep",
   fsep = .Platform$file.sep
 )
 
 # 4. Data file names -----
 st_file_demo <- "df_china_census_county_1990.csv"
-st_file_envir <- "df_era5_utci_china_1990_hour.csv"
+st_file_envir <- "df_era5_utci_china_1989_1991_hour_apr2sep.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file
@@ -75,16 +74,16 @@ arv_label_demo <- c("age_group_m3")
 str_prefix_loc <- ""
 stv_key_loc <- "location_id"
 stv_key_loc_agg <- "GBCounty"
-stv_grp_loc <- "Prov_En"
-arv_label_loc <- c("Prov_En")
+stv_grp_loc <- "all_locations"
+arv_label_loc <- c()
 
 # 8. Time variables -----
 str_prefix_time <- "day"
 
 # 9. Stats to compute within year
 st_time_stats <- "share"
-# ar_temp_bound <- seq(1,2, by=1)
-# ar_temp_bound <- seq(-40, 40, length.out = 81)
+# ar_temp_bound <- seq(1,1, by=1)
+ar_temp_bound <- seq(-40, 40, length.out = 81)
 bl_greater <- TRUE
 
 # Sub_group of focus
@@ -94,8 +93,8 @@ st_loc_subgroup <- NULL
 # 10. File names prefix, the rest of name from combining grp_demo and grp_loc
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
-# dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dmloc_90prov"
+# dm = demo, hours file, non-winter time only (no jan/feb/nov/dec)
+snm_out_file_name_prefix_base <- "dm_90apr2sep"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

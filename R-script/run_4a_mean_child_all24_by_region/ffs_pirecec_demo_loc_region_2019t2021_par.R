@@ -1,5 +1,5 @@
-# Implements Part 2 of https://github.com/ClimateInequality/PrjCEC/issues/30
-# Follows from `cec_code/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_1990.R`
+# Derived from `cec_code/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_2020.R`
+# Implements step 1 of https://github.com/ClimateInequality/PrjCEC/issues/30
 
 # 0. Load local script support ------
 source("R-script/ffs_pirecec_support.R")
@@ -49,21 +49,21 @@ spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file
 # Results/data output folder
 spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_loc_par", "prov_1990",
+  "ineq_results", "ineq_demo_loc_par", "region_2019t2021",
   fsep = .Platform$file.sep
 )
 
 # 4. Data file names -----
-st_file_demo <- "df_china_census_county_1990.csv"
-st_file_envir <- "df_era5_utci_china_1990_hour.csv"
+st_file_demo <- "df_china_census_county_2020.csv"
+st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file
-st_file_key_popgrp <- "df_key_demo_china_census_1990.csv"
+st_file_key_popgrp <- "df_key_demo_china_census_2020.csv"
 # 5.2 Name of the loc key file:
-st_file_key_loc <- "df_key_loc_china_coord2county_1990.csv"
+st_file_key_loc <- "df_key_loc_china_coord2county_2020.csv"
 # 5.3 Name of the higher-loc-key file:
-st_file_key_loc_agg <- "df_key_loc_china_county2province_1990.csv"
+st_file_key_loc_agg <- "df_key_loc_china_county2province_2020.csv"
 
 # 6. Variable names for population groups -----
 str_prefix_demo <- "popgrp"
@@ -75,8 +75,8 @@ arv_label_demo <- c("age_group_m3")
 str_prefix_loc <- ""
 stv_key_loc <- "location_id"
 stv_key_loc_agg <- "GBCounty"
-stv_grp_loc <- "Prov_En"
-arv_label_loc <- c("Prov_En")
+stv_grp_loc <- "region_name"
+arv_label_loc <- c("region_name")
 
 # 8. Time variables -----
 str_prefix_time <- "day"
@@ -95,7 +95,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dmloc_90prov"
+snm_out_file_name_prefix_base <- "dmloc_19t21region"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

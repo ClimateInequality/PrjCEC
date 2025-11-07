@@ -47,7 +47,7 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path(spt_pire_team_kf, "data-res", fsep = .Platform$file.sep)
 spt_path_out_root <- file.path(spt_pire_team_kf,
   "ineq_results", "ineq_demo_risk_par",
   fsep = .Platform$file.sep
@@ -93,7 +93,7 @@ bl_gen_input_files <- TRUE
 bl_skip_gen_if_exist <- TRUE
 
 # sets to run
-ar_it_set <- c(1, 2)
+ar_it_set <- c(1, 2, 3, 4)
 for (it_set in ar_it_set) {
   # 2.C Results/data output folder
   if (it_set == 1) {
@@ -106,6 +106,16 @@ for (it_set in ar_it_set) {
     st_yrfile_suffix <- "2020"
     # dm = demo, dbl = double thresholds, atrisk = individuals (children) at risk
     snm_out_file_name_prefix_base <- "dmdbl_20atrisk"
+  } else if (it_set == 3) {
+    st_yrfile_suffix_utci <- "1989_1991_hour"
+    st_yrfile_suffix <- "1990"
+    # dm = demo, dbl = double thresholds, atrisk = individuals (children) at risk
+    snm_out_file_name_prefix_base <- "dmdbl_89_91atrisk"
+  } else if (it_set == 4) {
+    st_yrfile_suffix_utci <- "2019_2021_hour"
+    st_yrfile_suffix <- "2020"
+    # dm = demo, dbl = double thresholds, atrisk = individuals (children) at risk
+    snm_out_file_name_prefix_base <- "dmdbl_19_21atrisk"
   }
 
 

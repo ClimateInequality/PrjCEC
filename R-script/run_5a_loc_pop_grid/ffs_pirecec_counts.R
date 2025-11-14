@@ -33,14 +33,12 @@ for (it_year in ar_it_year) {
   if (it_year == 1990) {
     # 1990 names
     st_file_demo <- "df_china_census_county_1990.csv"
-    st_file_envir <- "df_era5_utci_china_1990_hour.csv"
     st_file_key_popgrp <- "df_key_demo_china_census_1990.csv"
     st_file_key_loc <- "df_key_loc_china_coord2county_1990.csv"
     st_file_key_loc_agg <- "df_key_loc_china_county2province_1990.csv"
   } else if (it_year == 2020) {
     # 2020 names
     st_file_demo <- "df_china_census_county_2020.csv"
-    st_file_envir <- "df_era5_utci_china_2020_hour.csv"
     st_file_key_popgrp <- "df_key_demo_china_census_2020.csv"
     st_file_key_loc <- "df_key_loc_china_coord2county_2020.csv"
     st_file_key_loc_agg <- "df_key_loc_china_county2province_2020.csv"

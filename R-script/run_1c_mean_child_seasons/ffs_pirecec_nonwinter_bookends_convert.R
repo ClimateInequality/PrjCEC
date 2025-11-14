@@ -25,23 +25,27 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder, store data to file
-spt_path_out <- file.path(spt_path_data, "clean_data", fsep = .Platform$file.sep)
+spt_path_out <- spt_path_data
 
 # 3. Data file names -----
 # it_file_ctr <- 1
-for (it_file_ctr in c(1, 3)) {
+for (it_file_ctr in c(1,2,3,4)) {
     if (it_file_ctr == 1) {
         st_file_envir <- "df_era5_utci_china_1989_1991_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_1989_1991_hour_apr2sep.csv"
+        st_date_start <- "1989-01-01 00:00"
     } else if (it_file_ctr == 2) {
         st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_2019_2021_hour_apr2sep.csv"
+        st_date_start <- "2019-01-01 00:00"
     } else if (it_file_ctr == 3) {
         st_file_envir <- "df_era5_utci_china_1989_1991_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_1989_1991_hour_oct2mar.csv"
+        st_date_start <- "1989-01-01 00:00"
     } else if (it_file_ctr == 4) {
         st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_2019_2021_hour_oct2mar.csv"
+        st_date_start <- "2019-01-01 00:00"
     }
 
     # 4. Read in file, all hours data
@@ -63,7 +67,7 @@ for (it_file_ctr in c(1, 3)) {
     # 6. Convert hours to utc time format
     # Define origin time in UTC
     de_utc_origin <- as.POSIXct(
-        "1990-01-01 00:00",
+        st_date_start,
         format = "%Y-%m-%d %H:%M", tz = "UTC"
     )
     # Construct time in hours for UTC time

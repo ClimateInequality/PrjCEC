@@ -31,9 +31,11 @@ for (it_file_ctr in seq(1, 2)) {
     if (it_file_ctr == 1) {
         st_file_envir <- "df_era5_utci_china_1989_1991_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_1989_1991_hour6t22.csv"
+        st_date_start <- "1989-01-01 00:00"
     } else if (it_file_ctr == 2) {
         st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
         st_file_out_envir <- "df_era5_utci_china_2019_2021_hour6t22.csv"
+        st_date_start <- "2019-01-01 00:00"
     }
 
     # 4. Read in file, all hours data
@@ -55,7 +57,7 @@ for (it_file_ctr in seq(1, 2)) {
     # 6. Convert hours to utc time format
     # Define origin time in UTC
     de_utc_origin <- as.POSIXct(
-        "1990-01-01 00:00",
+        st_date_start,
         format = "%Y-%m-%d %H:%M", tz = "UTC"
     )
     # Construct time in hours for UTC time

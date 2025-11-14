@@ -47,7 +47,8 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf, "bookendYears", "data-res", fsep = .Platform$file.sep)
+# spt_path_out_datares <- file.path(spt_pire_team_kf, "bookendYears", "data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
 #[if st_year_range is = 1989t1991 then use all file names shown below, if 2019t2021 use same file but call different below files]
 spt_path_out <- file.path(spt_pire_team_kf,
   "bookendYears", "ineq_results", "ineq_demo_par", "1989_1991_hour24",
@@ -96,7 +97,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dm_90h24"
+snm_out_file_name_prefix_base <- "dm_89t91h24"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

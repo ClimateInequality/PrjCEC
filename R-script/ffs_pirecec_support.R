@@ -63,9 +63,9 @@ ffs_pirecec_path_run <- function() {
         "PrjCECReplicate",
         fsep = .Platform$file.sep
     )
-
     spt_root_prj_main_dropbox  <- file.path(
-        "/Users", "mlaghi", "Dropbox", "PIRE", "team", "marco_laghi",
+        "C:", "Users", "fan", "UH-ECON Dropbox", "Fan Wang",
+        "PIRE", "team", "marco_laghi",
         "PrjCECReplicate",
         fsep = .Platform$file.sep
     ) 

@@ -15,7 +15,6 @@ ar_temp_bound <- ls_script_controls$ar_temp_bound
 library(readr)
 library(dplyr)
 library(tidyr)
-library(kableExtra)
 library(stringr)
 library(ggplot2)
 # library(tidyverse)
@@ -48,8 +47,10 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf, "clean_data", "data-res", fsep = .Platform$file.sep)
-spt_path_out <- file.path( spt_pire_team_kf, "clean_data", "ineq_results", "ineq_demo_par", "2019_2021_hour24",
+# spt_path_out_datares <- file.path(spt_pire_team_kf, "clean_data", "data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
+spt_path_out <- file.path(spt_pire_team_kf, 
+  "bookendYears", "ineq_results", "ineq_demo_par", "2019_2021_hour24",
   fsep = .Platform$file.sep
 )
 
@@ -95,12 +96,12 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 20h6t22, 2020, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dm_20h24"
+snm_out_file_name_prefix_base <- "dm_19t21h24"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE
 bl_save_csv <- TRUE
-verbose <- TRUE
+verbose <- FALSE
 verbose_debug <- TRUE
 
 # 12. Run parallel to generate raw files or to combine ----
@@ -121,7 +122,7 @@ for (it_run in ls_run) {
         st_time_stats = st_time_stats,
         fl_temp_bound = fl_temp_bound,
         bl_greater = bl_greater,
-        verbose = TRUE
+        verbose = FALSE
       )$snm_new_file_name_prefix
 
       # Generate results
@@ -142,7 +143,7 @@ for (it_run in ls_run) {
         snm_new_file_name_prefix = snm_new_file_name_prefix,
         st_time_stats = st_time_stats, fl_temp_bound = fl_temp_bound, bl_greater = bl_greater,
         bl_save_img = bl_save_img, bl_save_csv = bl_save_csv,
-        verbose = TRUE, verbose_debug = TRUE
+        verbose = verbose, verbose_debug = verbose_debug
       )
     }
     parallel::stopCluster(cl = ob_cluster)

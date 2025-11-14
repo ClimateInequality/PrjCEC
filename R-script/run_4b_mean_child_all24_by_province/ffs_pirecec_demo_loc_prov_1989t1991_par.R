@@ -47,9 +47,9 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_loc_par", "prov_1989t1991",
+  "bookendYears", "ineq_results", "ineq_demo_loc_par", "prov_1989_1991",
   fsep = .Platform$file.sep
 )
 

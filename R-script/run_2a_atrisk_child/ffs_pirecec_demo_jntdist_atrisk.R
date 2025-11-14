@@ -1,5 +1,7 @@
 # Implements https://github.com/ClimateInequality/PrjCEC/issues/39
 # Developed based on `sandbox/R/run_full_dist/ffp_gpp_inequality_child_cdf_full_a1.R`.
+# Run the `R-script/run_2a_atrisk_child/ffs_pirecec_demo_jntdist_atrisk_par.R` file
+# This file is for testing, this is not been updated.
 
 # 0. Load local script support ------
 source("R-script/ffs_pirecec_support.R")

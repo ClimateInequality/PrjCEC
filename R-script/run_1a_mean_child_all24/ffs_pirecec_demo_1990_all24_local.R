@@ -1,5 +1,5 @@
-# Implements Part 2 of https://github.com/ClimateInequality/PrjCEC/issues/30
-# Follows from `cec_code/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_2020.R`
+# Implements Part 1 of https://github.com/ClimateInequality/PrjCEC/issues/34
+# Follows from `R-script/code_d_regional/ffp_cec_inequality_run_demo_loc_a2_parallel_region_1990.R`
 
 # 0. Load local script support ------
 source("R-script/ffs_pirecec_support.R")
@@ -19,7 +19,7 @@ library(stringr)
 library(ggplot2)
 # library(tidyverse)
 
-# Load parallel packages
+# load parallel packages
 if (1 %in% ls_run) {
   library(iterators)
   library(parallel)
@@ -40,7 +40,7 @@ if (1 %in% ls_run) {
   doParallel::registerDoParallel(cl = ob_cluster)
 }
 
-# 3. Get paths, constructed in `cec_code/ff_pirecec_support.R`
+# 3. Get paths, constructed in `R-script/ffs_pirecec_support.R`
 ls_paths <- ffs_pirecec_path_run()
 spt_cec_sandbox_r_func <- ls_paths$spt_cec_sandbox_r_func
 spt_pire_team_kf <- ls_paths$spt_pire_team_kf
@@ -48,22 +48,23 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
 spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
-spt_path_out <- file.path(spt_pire_team_kf,
-  "bookendYears", "ineq_results", "ineq_demo_loc_par", "prov_2019_2021",
+spt_pire_team_ml <- ls_paths$spt_pire_team_ml
+spt_path_out <- file.path(spt_pire_team_ml,
+  "ineq_results", "ineq_demo_par", "1990_hour24",
   fsep = .Platform$file.sep
 )
 
 # 4. Data file names -----
-st_file_demo <- "df_china_census_county_2020.csv"
-st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
+st_file_demo <- "df_china_census_county_1990.csv"
+st_file_envir <- "df_era5_utci_china_1990_hour.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file
-st_file_key_popgrp <- "df_key_demo_china_census_2020.csv"
+st_file_key_popgrp <- "df_key_demo_china_census_1990.csv"
 # 5.2 Name of the loc key file:
-st_file_key_loc <- "df_key_loc_china_coord2county_2020.csv"
+st_file_key_loc <- "df_key_loc_china_coord2county_1990.csv"
 # 5.3 Name of the higher-loc-key file:
-st_file_key_loc_agg <- "ChSi1990_region_df_key_loc_china_county2province_2020.csv"
+st_file_key_loc_agg <- "df_key_loc_china_county2province_1990.csv"
 
 # 6. Variable names for population groups -----
 str_prefix_demo <- "popgrp"
@@ -75,16 +76,15 @@ arv_label_demo <- c("age_group_m3")
 str_prefix_loc <- ""
 stv_key_loc <- "location_id"
 stv_key_loc_agg <- "GBCounty"
-# Note using province names from 1990 (chongqing was a apart of sichuan)
-stv_grp_loc <- "Prov_En_1990"
-arv_label_loc <- c("Prov_En_1990")
+stv_grp_loc <- "all_locations"
+arv_label_loc <- c()
 
 # 8. Time variables -----
 str_prefix_time <- "day"
 
 # 9. Stats to compute within year
 st_time_stats <- "share"
-# ar_temp_bound <- seq(1,2, by=1)
+# ar_temp_bound <- seq(1,1, by=1)
 # ar_temp_bound <- seq(-40, 40, length.out = 81)
 bl_greater <- TRUE
 
@@ -96,7 +96,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dmloc_19t21prov"
+snm_out_file_name_prefix_base <- "dm_90h24"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

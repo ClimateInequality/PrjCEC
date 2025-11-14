@@ -16,10 +16,12 @@ if (11 %in% ar_it_results_set) {
 }
 if (12 %in% ar_it_results_set) {
     # day time only
+    source("R-script/run_1b_mean_child_6t22/ffs_pirecec_daytimeonly_convert.R")
     source("R-script/run_1b_mean_child_6t22/ffs_pirecec_demo_1990_6t22.R")
     source("R-script/run_1b_mean_child_6t22/ffs_pirecec_demo_2020_6t22.R")
 }
 if (13 %in% ar_it_results_set) {
+    source("R-script/run_1c_mean_child_seasons/ffs_pierecec_nonwinter_convert.R")
     # April to September
     source("R-script/run_1c_mean_child_seasons/ffs_pirecec_demo_1990_apr2sep.R")
     source("R-script/run_1c_mean_child_seasons/ffs_pirecec_demo_2020_apr2sep.R")
@@ -28,6 +30,7 @@ if (13 %in% ar_it_results_set) {
     source("R-script/run_1c_mean_child_seasons/ffs_pirecec_demo_2020_oct2mar.R")
 }
 if (21 %in% ar_it_results_set) {
+    # !! select to run only 1 and 2
     source("R-script/run_2a_atrisk_child/ffs_pirecec_demo_jntdist_atrisk_par.R")
     # source("R-script/run_2a_atrisk_child/ffs_pirecec_demo_jntdist_atrisk.R")
 }

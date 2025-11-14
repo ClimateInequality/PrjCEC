@@ -83,7 +83,7 @@ str_prefix_time <- "day"
 # 9. Stats to compute within year
 st_time_stats <- "share"
 # ar_temp_bound <- seq(1,1, by=1)
-ar_temp_bound <- seq(-40, 40, length.out = 81)
+# ar_temp_bound <- seq(-40, 40, length.out = 81)
 bl_greater <- TRUE
 
 # Sub_group of focus

@@ -46,9 +46,9 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_par", "2019_2021_apr2sep",
+  "bookendYears", "ineq_results", "ineq_demo_par", "2019_2021_apr2sep",
   fsep = .Platform$file.sep
 )
 
@@ -83,7 +83,7 @@ str_prefix_time <- "day"
 # 9. Stats to compute within year
 st_time_stats <- "share"
 # ar_temp_bound <- seq(1,1, by=1)
-ar_temp_bound <- seq(-40, 40, length.out = 81)
+# ar_temp_bound <- seq(-40, 40, length.out = 81)
 bl_greater <- TRUE
 
 # Sub_group of focus
@@ -94,7 +94,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, hours file, non-winter time only (no jan/feb/nov/dec)
-snm_out_file_name_prefix_base <- "dm_20apr2sep"
+snm_out_file_name_prefix_base <- "dm_19t21apr2sep"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

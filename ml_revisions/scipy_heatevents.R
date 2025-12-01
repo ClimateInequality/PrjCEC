@@ -149,7 +149,7 @@ library(ggplot2)
 library(sf)
 library(viridis)
 
-shp <- st_read("/Users/mlaghi/Downloads/ChinaCensus1990CountyShape/china90a.shp")
+shp <- st_read("./Dropbox/PIRE/team/marco_laghi/1990a/china90a.shp")
 china_boundary <- st_union(shp)   
 st_crs(china_boundary) <- 4326
 

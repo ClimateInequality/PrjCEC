@@ -54,7 +54,7 @@ spt_path_out <- file.path(spt_pire_team_kf,
 
 # 4. Data file names -----
 st_file_demo <- "df_china_census_county_1990.csv"
-st_file_envir <- "df_era5_utci_china_1989_1991_hour_apr2sep.csv"
+st_file_envir <- "df_era5_utci_china_1989_1991_hour_oct2mar.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file

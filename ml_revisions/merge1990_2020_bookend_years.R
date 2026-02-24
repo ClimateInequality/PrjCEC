@@ -25,11 +25,10 @@ require(haven)
 
 #-------Load in 1989-1991-------
 loader1 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1989_hourly.rda")
-loader2 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1990_hourly.rda")
-loader3 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1991_hourly.rda")
-
 ml1 <- get(loader1[1])
+loader2 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1990_hourly.rda")
 ml2 <- get(loader2[1])
+loader3 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1991_hourly.rda")
 ml3 <- get(loader3[1])
 
 key <- readr::read_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_key_loc_china_coord2county_1990.csv")
@@ -83,12 +82,12 @@ write_csv(ml_all, "/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/c
 
 #-------Load in 2019-2021-------
 loader1 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2019_hourly.rda")
-loader2 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2020_hourly.rda")
-loader3 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2021_hourly.rda")
-
 ml1 <- get(loader1[1])
-ml2 <- get(loader2[1])
+loader2 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2020_hourly.rda")
+ml2 <- get(loader2[1])         
+loader3 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2021_hourly.rda")
 ml3 <- get(loader3[1])
+
 
 key <- readr::read_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_key_loc_china_coord2county_2020.csv")
 

@@ -98,7 +98,6 @@ colnames(df_china_census_county_1990)[2:37] <-c(
 # substitute utci_ave_1990 with utci_ave_2020
 ##############################################
 # df_key_loc_china_coord2county_1990 ----
-#utci_ave_1990 <- read_csv("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/utci_ecmwf_raw_data/utci_ave_1990.csv")
 
 # Should only need to do this once, to create ave file with long, lat
 
@@ -220,7 +219,7 @@ df_key_loc_china_coord2county_1990<-df_key_loc_china_coord2county_1990 %>%
 
 
 #write.csv(df_key_loc_china_coord2county_1990,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_1990.csv",row.names = FALSE)
-write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_1989t1991_hour_decomp2019t2021_new.csv",row.names = FALSE)
+write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_1990demo_2019t2021utci.csv",row.names = FALSE)
 
 
 # # df_key_demo_china_census_1990 ----
@@ -308,4 +307,5 @@ write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/P
 # 
 # #write.csv(df_key_loc_china_county2province_1990,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_county2province_1990.csv")
 # 
+
 

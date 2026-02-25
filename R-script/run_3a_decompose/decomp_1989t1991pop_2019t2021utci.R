@@ -160,7 +160,7 @@ small_county_1990 <-regions_centr %>%
 
 # prepare same column names as for "county_join_1990" to join
 #small_county_1990 <-small_county_1990[, c(7:372,6,1)]
-small_county_1990 <-small_county_1990[, c(7:8766,6,1)]
+small_county_1990 <-small_county_1990[, c(7:length(small_county_1990),6,1)]
 small_county_1990<-st_as_sf(small_county_1990)
 st_crs(county_join_1990) <- st_crs(small_county_1990)
 
@@ -308,3 +308,4 @@ write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/P
 # 
 # #write.csv(df_key_loc_china_county2province_1990,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_county2province_1990.csv")
 # 
+

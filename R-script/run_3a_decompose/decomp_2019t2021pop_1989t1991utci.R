@@ -30,8 +30,20 @@ write_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_dat
 
 #return to Kai code
 
-# note: use 1990 utci here
-utci_ave_2020 <- read_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/utci_ave_1989t1991_hour.csv") %>% select(-...1) %>% arrange(Long, Lat)
+#input data
+loader1 <- load("C:/Users/feng/Downloads/cim_annual_1940t2020/utci_china_Y1989_hourly.rda")
+ml1 <- get(loader1[1])
+loader2 <- load("C:/Users/feng/Downloads/cim_annual_1940t2020/utci_china_Y1990_hourly.rda")
+ml2 <- get(loader2[1])
+loader3 <- load("C:/Users/feng/Downloads/cim_annual_1940t2020/utci_china_Y1991_hourly.rda")
+ml3 <- get(loader3[1])
+utci_1989_1991 <- ml1 %>% left_join(ml2, by=c('Long','Lat')) %>%
+  left_join(ml3, by=c('Long','Lat')) 
+#write_csv(utci_1989_1991, "C:/Users/feng/Downloads/utci_1989_1991.csv")
+
+# note: use 1989_1991 utci here on purpose 
+utci_ave_2020 <- utci_1989_1991 %>% arrange(Long, Lat)
+
 utci_point_2020 <- st_as_sf(utci_ave_2020,coords=c("Long","Lat"),crs=4326)
 class(utci_point_2020) 
 
@@ -288,6 +300,7 @@ df_key_loc_china_coord2county_2020<-df_key_loc_china_coord2county_2020 %>%
 
 #write.csv(df_key_loc_china_coord2county_2020,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_2020.csv",row.names = FALSE)
 write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_2020demo_1989t1991utci.csv",row.names = FALSE)
+
 
 
 

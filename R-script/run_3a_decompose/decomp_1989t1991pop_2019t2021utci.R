@@ -112,10 +112,20 @@ write_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_dat
 
 #return to Kai code
 
+loader1 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2019_hourly.rda")
+ml1 <- get(loader1[1])
+loader2 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2020_hourly.rda")
+ml2 <- get(loader2[1])         
+loader3 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y2021_hourly.rda")
+ml3 <- get(loader3[1])
 
-utci_ave_1990_hour <- read_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/utci_ave_2019t2021_hour.csv") %>% select(-...1) 
-utci_ave_1990_hour <- utci_ave_1990_hour %>%
-  arrange(Long, Lat)
+utci_2019_2021 <- ml1 %>% left_join(ml2, by=c('Long','Lat')) %>%
+  left_join(ml3, by=c('Long','Lat')) 
+#write_csv(utci_2019_2021, "/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_2019_2021.csv")
+
+
+# use utci 2019 to 2021 on purpose
+utci_ave_1990_hour <- utci_2019_2021 %>% arrange(Long, Lat)
 
 #utci_ave_1990_hour <- utci_ave_1990_wide_hour
 #transform to spatial data 
@@ -307,5 +317,6 @@ write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/P
 # 
 # #write.csv(df_key_loc_china_county2province_1990,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_county2province_1990.csv")
 # 
+
 
 

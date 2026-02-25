@@ -219,10 +219,9 @@ small_county_2020 <-regions_centr_2020 %>%
 
 
 # prepare same column names as for "county_join_2020" to join
-small_county_2020 <-small_county_2020[, c(7:8766,6,1)]
+small_county_2020 <-small_county_2020[, c(7:length(small_county_2020),6,1)]
 small_county_2020<-st_as_sf(small_county_2020)
 st_crs(county_join_2020) <- st_crs(small_county_2020)
-
 
 
 ###
@@ -289,3 +288,4 @@ df_key_loc_china_coord2county_2020<-df_key_loc_china_coord2county_2020 %>%
 
 #write.csv(df_key_loc_china_coord2county_2020,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_2020.csv",row.names = FALSE)
 write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_2019t2021_hour_decomp1989t1991_new.csv",row.names = FALSE)
+

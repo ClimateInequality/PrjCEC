@@ -17,19 +17,6 @@ library(writexl)
 # substitute utci_ave_2020 with utci_ave_1990
 ##############################################
 
-# Should only need to do this once, to create ave file with long, lat
-
-locID90 <- read_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_1989_1991_hour.csv")
-coord90 <- read_csv("/Users/mlaghi/Documents/GitHub/PrjCEC/data/df_key_loc_china_coord2county_1990.csv")
-coord90 <- coord90 %>%
-  select(Long, Lat, location_id) %>%
-  left_join(locID90, by = location_id) %>%
-  select(-location_id)
-write_csv("/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/utci_ave_1989t1991_hour.csv")
-
-
-#return to Kai code
-
 #input data
 loader1 <- load("/Users/mlaghi/Dropbox/DAEO_bigdata_prc/w_c_era5/utci/cim_annual_1940t2020/utci_china_Y1989_hourly.rda")
 ml1 <- get(loader1[1])
@@ -300,6 +287,7 @@ df_key_loc_china_coord2county_2020<-df_key_loc_china_coord2county_2020 %>%
 
 #write.csv(df_key_loc_china_coord2county_2020,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_2020.csv",row.names = FALSE)
 write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_2020demo_1989t1991utci.csv",row.names = FALSE)
+
 
 
 

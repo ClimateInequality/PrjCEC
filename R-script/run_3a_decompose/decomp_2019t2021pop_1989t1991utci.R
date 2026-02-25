@@ -287,5 +287,6 @@ df_key_loc_china_coord2county_2020<-df_key_loc_china_coord2county_2020 %>%
 
 
 #write.csv(df_key_loc_china_coord2county_2020,"C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/PIRE/team/kai_feng/clean_data/df_key_loc_china_coord2county_2020.csv",row.names = FALSE)
-write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_2019t2021_hour_decomp1989t1991_new.csv",row.names = FALSE)
+write.csv(df_era5_utci_china_1990,"/Users/mlaghi/Dropbox/PIRE/team/marco_laghi/PrjCECReplicate/clean_data/df_era5_utci_china_2020_hour_decomp1989t1991.csv",row.names = FALSE)
+
 

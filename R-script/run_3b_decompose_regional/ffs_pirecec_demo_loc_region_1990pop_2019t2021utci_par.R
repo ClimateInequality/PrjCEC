@@ -47,16 +47,16 @@ spt_pire_team_kf <- ls_paths$spt_pire_team_kf
 # Data input folder
 spt_path_data <- file.path(spt_pire_team_kf, "clean_data", fsep = .Platform$file.sep)
 # Results/data output folder
-spt_path_out_datares <- file.path(spt_pire_team_kf,"data-res", fsep = .Platform$file.sep)
+spt_path_out_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_out <- file.path(spt_pire_team_kf,
-  "ineq_results", "ineq_demo_pvt_par", "region_1990pop_2020utci",
+  "bookendYears", "ineq_results", "ineq_demo_pvt_par", "region_1990pop_2019t2021utci",
   fsep = .Platform$file.sep
 )
 
 # 4. Data file names -----
 st_file_demo <- "df_china_census_county_1990.csv"
-st_file_envir <- "df_era5_utci_china_1989t1991_hour_decomp2019t2021_new.csv"
-
+# st_file_envir <- "df_era5_utci_china_1990demo_2019t2021utci.csv"
+st_file_envir <- "df_era5_utci_china_2019_2021_hour.csv"
 
 # 5. Key file names -----
 # 5.1 Name of the population key file
@@ -96,7 +96,7 @@ st_loc_subgroup <- NULL
 # stv_grp_demo and stv_grp_loc
 snm_in_file_name_prefix_base <- "ineq"
 # dm = demo, 90h6t22, 1990, hours file, 6 to 22 day time hours only
-snm_out_file_name_prefix_base <- "dmloc_90pop20utciregion"
+snm_out_file_name_prefix_base <- "dmloc_90pop19t21utciregion"
 
 # 11. some additional parameters ------
 bl_save_img <- TRUE

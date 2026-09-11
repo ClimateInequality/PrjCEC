@@ -1,8 +1,8 @@
 library(readxl)
 library(scales)
-
+library(viridis)
 # setwd local
-setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
+#setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
 
 # File names
 bl_main_save <- TRUE
@@ -64,12 +64,12 @@ fig3 <- counter_decom_long %>%
   scale_color_viridis(discrete = TRUE)+
   labs(x = "\nUTCI", y = "Percentage point (pp) change\n", col = "",linetype ="", shape="") +
   scale_y_continuous(labels = percent_format(scale = 100),
-                     breaks= seq(0,0.035,0.01)) +
-  annotate("rect", xmin = 26, xmax = 32, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFEBEB", alpha = 0.15) +
+                     breaks= seq(0,0.055,0.01)) +
+  annotate("rect", xmin = 26, xmax = 32, ymin = -Inf, ymax = Inf, fill = "#FFEBEB", alpha = 0.15) +
   annotate("text", x = 29, y = 1.05 * max(counter_decom_long$value), label = "Moderate Heat Stress", color = "black", size = 4.5, alpha = 0.7) +
-  annotate("rect", xmin = 32, xmax = 38, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FFB6C1", alpha = 0.15) +
+  annotate("rect", xmin = 32, xmax = 38, ymin = -Inf, ymax = Inf, fill = "#FFB6C1", alpha = 0.15) +
   annotate("text", x = 35, y = 1.05 * max(counter_decom_long$value), label = "Strong Heat Stress", color = "black", size = 4.5, alpha = 0.7) +
-  annotate("rect", xmin = 38, xmax = 40, ymin = 0, ymax = 1.1*max(counter_decom_long$value), fill = "#FF69B4", alpha = 0.15) +
+  annotate("rect", xmin = 38, xmax = 40, ymin = -Inf, ymax = Inf, fill = "#FF69B4", alpha = 0.15) +
   annotate("text", x = 39, y = 1.05 * max(counter_decom_long$value), label = "Very Strong\nHeat Stress", color = "black", size = 4.5, alpha = 0.7)+
   theme(legend.position = c(0.8, 0.5))+
   theme(legend.background = element_blank(),
@@ -82,6 +82,7 @@ fig3 <- counter_decom_long %>%
   
 
 fig3
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_decompose/fig_3_decompose.pdf", plot = fig3, width = 11.69, height = 6.27, device = cairo_pdf)
+
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_decompose/SINGLE_fig_3_decompose.pdf", plot = fig3, width = 11.69, height = 6.27, device = cairo_pdf)
 
 

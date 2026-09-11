@@ -12,7 +12,7 @@ library(scales)
 library(tidyr)
 
 # setwd local
-setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
+#setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
 
 # File names
 bl_main_save <- TRUE
@@ -182,7 +182,7 @@ fig1 <-
   ) +
   ggtitle("")
 fig1
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_atrisk/fig_2_c_atrisk_pp.pdf", plot = fig1, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_atrisk/SINGLE_fig_2_c_atrisk_pp.pdf", plot = fig1, width = 11.69, height = 5, device = cairo_pdf)
 
 
 fig2 <-
@@ -223,7 +223,7 @@ fig2 <-
   ) +
   ggtitle("")
 fig2
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_atrisk/fig_2_a_atrisk_1990.pdf", plot = fig2, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_atrisk/SINGLE_fig_2_a_atrisk_1990.pdf", plot = fig2, width = 11.69, height = 5, device = cairo_pdf)
 
 
 fig3 <-
@@ -264,7 +264,7 @@ fig3 <-
   ) +
   ggtitle("")
 fig3
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_atrisk/fig_2_b_atrisk_2020.pdf", plot = fig3, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_atrisk/SINGLE_fig_2_a_atrisk_2020.pdf", plot = fig3, width = 11.69, height = 5, device = cairo_pdf)
 
 
 
@@ -291,23 +291,161 @@ ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res
 #     theme(legend.position = "top")
 
 
+
+
+
+
+
+
+
+# Combined publication figure for easy review
+
+
+
+fig2 <-
+  ggplot(dat1990, aes(x = utci, y = share_time, fill = value * 100)) +
+  geom_tile() +
+  geom_text(
+    data = subset(dat1990, value != 0),
+    aes(label = sprintf("%.1f%%", value * 100)),
+    size = 5,
+    alpha = 0.7
+  ) +
+  scale_fill_gradient2(
+    mid = "#FBFEF9",
+    low = "#0C6291",
+    high = "#A63446"
+  ) +
+  theme_classic() +
+  scale_y_reverse(
+    breaks = seq(0.04, 0.36, 0.08),
+    labels = function(x) paste("≥", percent_format()(x))
+  ) +
+  scale_x_continuous(
+    breaks = seq(26, 40, 2),
+    labels = function(x) paste("≥", x, "°C")
+  ) +
+  labs(
+    x = "UTCI thresholds (intensity)",
+    y = "Share of annual hours (duration)",
+    title = "(a) 1989-91"
+  ) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    plot.title = element_text(
+      size = 16,
+      hjust = 0.5,
+      margin = margin(b = 10)
+    ),
+    legend.position = "none"
+  )
+
+
+
+
+fig3 <-
+  ggplot(dat2020, aes(x = utci, y = share_time, fill = value * 100)) +
+  geom_tile() +
+  geom_text(
+    data = subset(dat2020, value != 0),
+    aes(label = sprintf("%.1f%%", value * 100)),
+    size = 5,
+    alpha = 0.7
+  ) +
+  scale_fill_gradient2(
+    mid = "#FBFEF9",
+    low = "#0C6291",
+    high = "#A63446"
+  ) +
+  theme_classic() +
+  scale_y_reverse(
+    breaks = seq(0.04, 0.36, 0.08),
+    labels = function(x) paste("≥", percent_format()(x))
+  ) +
+  scale_x_continuous(
+    breaks = seq(26, 40, 2),
+    labels = function(x) paste("≥", x, "°C")
+  ) +
+  labs(
+    x = "UTCI thresholds (intensity)",
+    y = "Share of annual hours (duration)",
+    title = "(b) 2019-21"
+  ) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    plot.title = element_text(
+      size = 16,
+      hjust = 0.5,
+      margin = margin(b = 10)
+    ),
+    legend.position = "none"
+  )
+
+
+
+fig1 <-
+  ggplot(diff_2020_1990, aes(x = utci, y = share_time, fill = value * 100)) +
+  geom_tile() +
+  geom_text(
+    data = subset(diff_2020_1990, value != 0),
+    aes(label = paste0(sprintf("%.1f", value * 100), "pp")),
+    size = 5,
+    alpha = 0.7
+  ) +
+  scale_fill_gradient2(
+    mid = "#FBFEF9",
+    low = "#A63446",
+    high = "#0C6291"
+  ) +
+  theme_classic() +
+  scale_y_reverse(
+    breaks = seq(0.04, 0.36, 0.08),
+    labels = function(x) paste("≥", percent_format()(x))
+  ) +
+  scale_x_continuous(
+    breaks = seq(26, 40, 2),
+    labels = function(x) paste("≥", x, "°C")
+  ) +
+  labs(
+    x = "UTCI thresholds (intensity)",
+    y = "Percentage points (pp) changes",
+    title = "(c) Changes comparing 1989-91 and 2019-21 in percentage points"
+  ) +
+  theme(
+    text = element_text(size = 13),
+    axis.text.y = element_text(size = 13),
+    axis.text.x = element_text(size = 13),
+    plot.title = element_text(
+      size = 16,
+      hjust = 0.5,
+      margin = margin(b = 10)
+    ),
+    legend.position = "none"
+  )
+
+
+
+# -----------------------------
+# Combine panels
+# -----------------------------
+
 figure <- ggarrange(
-  fig2 + rremove("ylab") ,
-  fig3 + rremove("ylab") ,
-  fig1 + rremove("ylab") ,
+  fig2,
+  fig3,
+  fig1,
   ncol = 1,
-  heights = c(1, 1, 1)
+  heights = c(1, 1, 1),
+  align = "v"
 )
 
-
-figure <- annotate_figure(
-  figure,
-  left = textGrob(
-    "At least y% of time\n",
-    rot = 90,
-    vjust = 0.5,
-    gp = gpar(cex = 1.3)
-  ),
-  bottom = textGrob("UTCI", gp = gpar(cex = 1.3))
-)
 figure
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_atrisk/combined_fig_2_a_atrisk.pdf",
+ plot = figure, 
+  width = 11.69,
+  height = 6.27*3,
+  device = cairo_pdf
+)

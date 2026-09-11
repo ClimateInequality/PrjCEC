@@ -5,7 +5,7 @@ library(ggpubr)
 
 
 # setwd local
-setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
+#setwd("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/")
 
 # File names
 bl_main_save <- TRUE
@@ -115,8 +115,18 @@ fig_pp <- region %>%
     legend.text = element_text(size = 16),
     legend.title = element_text(size = 16)
   ) +
-  labs(x = "\nRegion", y = "Percentage point (pp) change\n", col = "Year") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1L),limits=c(0,0.05)) +
+  labs(
+    x = "\nEconomic regions",
+    y = "Percentage point (pp) change\n",
+    title = "(c) Changes comparing 1989–91 and 2019–21 in percentage points"
+  ) +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      size = 16,
+      margin = margin(b = 8)
+    )
+  )+  scale_y_continuous(labels = scales::percent_format(accuracy = 1L),limits=c(0,0.07)) +
   scale_fill_discrete(
     name = "UTCI",
     labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
@@ -130,7 +140,7 @@ fig_pp <- region %>%
   )
 #geom_rect(aes(xmin = 3.39, xmax = 3.95, ymin = 0.031, ymax = 0.0395),fill = "white", color = "black", size = 0.5)
 fig_pp
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_c_region_pp.pdf", plot = fig_pp, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_region_prov/SINGLE_fig_4_c_triple_region_pp.pdf", plot = fig_pp, width = 11.69, height = 5, device = cairo_pdf)
 
 # 
 # geom_rect(aes(xmin = 3.48, xmax = 3.9, 
@@ -155,8 +165,11 @@ fig_1990 <- region_plot %>%
     legend.text = element_text(size = 16),
     legend.title = element_text(size = 16)
   ) +
-  labs(x = "\nRegion", y = "Percentage\n", col = "Year") +
-  scale_y_continuous(labels = label_percent(scale = 100),limits=c(0,0.3)) +
+  labs(
+    x = "\nEconomic regions",
+    y = "Share of time during 1989–91\n",
+    title = "(a) 1989–91"
+  )+  scale_y_continuous(labels = label_percent(scale = 100),limits=c(0,0.3)) +
   scale_fill_discrete(
     name = "UTCI",
     labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
@@ -167,13 +180,19 @@ fig_1990 <- region_plot %>%
     legend.justification = c(0.5, 0),
     legend.box.just = "left",
     legend.background = element_rect(fill = "white",color = "black")
+  ) +  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      size = 16,
+      margin = margin(b = 8)
+    )
   )
   #geom_rect(aes(xmin = 3.39, xmax = 3.95,
   #              ymin = 0.215, ymax = 0.269),
   #          fill = "white", color = "black", size = 0.5)
   
 fig_1990
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_a_region_1990.pdf", plot = fig_1990, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_region_prov/SINGLE_fig_4_a_triple_region_1990.pdf", plot = fig_1990, width = 11.69, height = 5, device = cairo_pdf)
 
 
 fig_2020 <- region_plot %>%
@@ -190,8 +209,18 @@ fig_2020 <- region_plot %>%
     legend.title = element_text(size = 16),
     legend.position = "none"  # Hide the default legend
   ) +
-  labs(x = "\nRegion", y = "Percentage\n", col = "Year") +
-  scale_y_continuous(labels = label_percent(scale = 100), limits = c(0, 0.3)) +
+  labs(
+    x = "\nEconomic regions",
+    y = "Share of time during 2019–21\n",
+    title = "(b) 2019–21"
+  ) +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      size = 16,
+      margin = margin(b = 8)
+    )
+  )+  scale_y_continuous(labels = label_percent(scale = 100), limits = c(0, 0.3)) +
   scale_fill_discrete(
     name = "UTCI",
     labels = c("≥ 26 °C", "≥ 32 °C", "≥ 38 °C")
@@ -206,5 +235,27 @@ fig_2020 <- region_plot %>%
 #                ymin = 0.215, ymax = 0.269),
 #            fill = "white", color = "black", size = 0.5)
 fig_2020
-ggsave("C:/Users/Kaifs/OneDrive/Documents/dropbox_penn/Dropbox/GitHub/PrjCEC/res/res_region_prov/fig_4_b_region_2020.pdf", plot = fig_2020, width = 11.69, height = 5, device = cairo_pdf)
+ggsave("/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_region_prov/SINGLE_fig_4_b_triple_region_2020.pdf", plot = fig_2020, width = 11.69, height = 5, device = cairo_pdf)
 
+
+
+# Combined figure for easy review
+
+figure <- ggarrange(
+  fig_1990,
+  fig_2020,
+  fig_pp,
+  #labels = c("A", "B", "C"),
+  ncol = 1,
+  align = "v"
+)
+
+figure
+
+ggsave(
+  "/Users/mlaghi/Documents/GitHub/PrjCEC/res/res_region_prov/fig_4_triple_region_combined.pdf",
+  plot = figure,
+  width = 11.69,
+  height = 15,
+  device = cairo_pdf
+)

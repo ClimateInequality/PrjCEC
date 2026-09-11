@@ -9,14 +9,14 @@ bl_main_save <- TRUE
 spt_path_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_res <- file.path("res", "res_decompose", fsep = .Platform$file.sep)
 ls_st_files <- c(
-    "dm_90h24_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20h24_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dmloc_90region_share_gr_age_group_m3is0_14_region_name.csv",
-    "dmloc_20region_share_gr_age_group_m3is0_14_region_name.csv",
-    "dmloc_20pop90utci_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dmloc_20pop90utciregion_share_gr_age_group_m3is0_14_region_name.csv",
-    "dmloc_90pop20utci_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dmloc_90pop20utciregion_share_gr_age_group_m3is0_14_region_name.csv"
+    "dm_89t91h24_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_19t21h24_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dmloc_89t91region_share_gr_age_group_m3is0_14_region_name.csv",
+    "dmloc_19t21region_share_gr_age_group_m3is0_14_region_name.csv",
+    "dmloc_20pop89t91utci_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dmloc_20pop89t91utciregion_share_gr_age_group_m3is0_14_region_name.csv",
+    "dmloc_90pop19t21utci_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dmloc_90pop19t21utciregion_share_gr_age_group_m3is0_14_region_name.csv"
 )
 spn_path <- file.path(spt_path_datares, ls_st_files[1], fsep = .Platform$file.sep)
 df_dm_90h24 <- read_csv(spn_path)

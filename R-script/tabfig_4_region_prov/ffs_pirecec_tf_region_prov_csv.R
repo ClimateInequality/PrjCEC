@@ -8,11 +8,13 @@ library(tidyr)
 bl_main_save <- TRUE
 spt_path_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_res <- file.path("res", "res_region_prov", fsep = .Platform$file.sep)
+
+# files currently set to three year version
 ls_st_files <- c(
-    "dmloc_90region_share_gr_age_group_m3is0_14_region_name.csv",
-    "dmloc_90prov_share_gr_age_group_m3is0_14_Prov_En.csv",
-    "dmloc_20region_share_gr_age_group_m3is0_14_region_name.csv",
-    "dmloc_20prov_share_gr_age_group_m3is0_14_Prov_En_1990.csv"
+    "dmloc_89t91region_share_gr_age_group_m3is0_14_region_name.csv",
+    "dmloc_89t91prov_share_gr_age_group_m3is0_14_Prov_En.csv",
+    "dmloc_19t21region_share_gr_age_group_m3is0_14_region_name.csv",
+    "dmloc_19t21prov_share_gr_age_group_m3is0_14_Prov_En_1990.csv"
 )
 ar_utci_higher_group <- c(32, 35, 38)
 ar_utci_lower_group <- c(23, 26, 29)

@@ -9,14 +9,14 @@ bl_main_save <- TRUE
 spt_path_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_res <- file.path("res", "res_mean_child", fsep = .Platform$file.sep)
 ls_st_files <- c(
-    "dm_90h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_90h24_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20h24_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_90apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_90oct2mar_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
-    "dm_20oct2mar_share_gr_age_group_m3is0_14_all_locations.csv"
+    "dm_89t91h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_89t91h24_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_19t21h6t22_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_19t21h24_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_89t91apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_89t91oct2mar_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_19t21apr2sep_share_gr_age_group_m3is0_14_all_locations.csv",
+    "dm_19t21oct2mar_share_gr_age_group_m3is0_14_all_locations.csv"
 )
 
 # 1. Generate and load four data files with the same structure for time-type/year 3 by 2 combos

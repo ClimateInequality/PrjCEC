@@ -25,8 +25,8 @@ bl_main_save <- TRUE
 spt_path_datares <- file.path("data-res", fsep = .Platform$file.sep)
 spt_path_res <- file.path("res", "res_atrisk", fsep = .Platform$file.sep)
 ls_st_files <- c(
-  "dmdbl_90atrisk_share_gr_age_group_m3is0_14_GBCounty.csv",
-  "dmdbl_20atrisk_share_gr_age_group_m3is0_14_GBCounty.csv"
+  "dmdbl_89t91atrisk_share_gr_age_group_m3is0_14_GBCounty.csv",
+  "dmdbl_19t21atrisk_share_gr_age_group_m3is0_14_GBCounty.csv"
 )
 spn_path <- file.path(spt_path_datares, ls_st_files[1], fsep = .Platform$file.sep)
 df_dm_90atrisk <- read_csv(spn_path)
